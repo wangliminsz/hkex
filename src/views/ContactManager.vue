@@ -315,7 +315,7 @@
                                             <div class="d-flex">
                                                 <template v-if="contact.fields.hkd_rate_1">
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-normal text-sm" style="color: blue;">{{
+                                                        <span class="fw-normal" style="color: blue;">{{
                                                             contact.fields.hkd_rate_1 }}</span>
                                                     </div>
                                                 </template>
@@ -329,7 +329,7 @@
                                             <div class="d-flex">
                                                 <template v-if="contact.fields.hkd_rate_2">
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-normal text-sm" style="color: blue;">{{
+                                                        <span class="fw-normal" style="color: blue;">{{
                                                             contact.fields.hkd_rate_2 }}</span>
                                                     </div>
                                                 </template>
@@ -343,7 +343,7 @@
                                             <div class="d-flex">
                                                 <template v-if="contact.fields.hkd_rate_3">
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-normal text-sm" style="color: blue;">{{
+                                                        <span class="fw-normal" style="color: blue;">{{
                                                             contact.fields.hkd_rate_3 }}</span>
                                                     </div>
                                                 </template>
