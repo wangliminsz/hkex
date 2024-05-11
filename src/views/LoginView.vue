@@ -10,12 +10,7 @@
             </div>
          </div>
       </div>
-
-      <!-- <div class="container">
-         <div class="login-content">
-            <img src="../assets/img/ant.jpg" style="border-radius: 50%;">
-         </div>
-      </div> -->
+      
 
       <div class="container" v-if="!loading">
          <div>
@@ -25,8 +20,6 @@
             <div class="login-content">
                
                <form @submit.prevent="submitLogin">
-                  <!-- class="antlogo" -->
-                  <!-- <img src="../assets/img/ant.jpg" style="border-radius: 50%;"> -->
                   <br />
                   <br />
                   <div class="input-div one">
@@ -48,22 +41,16 @@
                      <div class="div">
                         <input type="password" class="input" placeholder="Password" v-model="password"
                            :class="{ 'is-invalid': password && !isValidPassword }">
-                        <!-- <div v-if="password && !isValidPassword" class="invalid-feedback"><br /><br /><br />
-                           Password at least 6 digits
-                        </div> -->
                      </div>
                   </div>
-                  <!-- <br /> -->
+
                   <span>
-                     <!-- <a href="#" v-on:click="createAccount" :disabled="!isFormValid">Sign Up</a> -->
-                     <router-link to="/signup">Sign Up</router-link>
-                     <!-- <a href="#">Forgot Password?</a> -->
-                     <router-link to="/resetpassword">Reset Password</router-link>
+                     <!-- <router-link to="/signup">Sign Up</router-link> -->
+                     <!-- <router-link to="/resetpassword">Reset Password</router-link> -->
                   </span>
                   <br />
                   <input type="submit" class="btn_green" value="Login" :disabled="!isFormValid">
                </form>
-               <!-- <pre>{{ isFormValid }}</pre> -->
             </div>
          </div>
       </div>
