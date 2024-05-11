@@ -70,6 +70,65 @@
                                 <div class="col-sm-10">
                                     <ul class="list-group">
 
+                                        <div class="mb-2">
+                                            <li
+                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                <div class="d-flex">
+                                                    <template v-if="contact.fields.cny_1">
+                                                        <div class="d-flex flex-column">
+                                                            <span class="fw-normal text-sm" :style="{
+                                                                color: contact.fields.status === '進行中' ? 'red' : 'green',
+                                                                // color: contact.fields.status === '已完成' ? 'green' : null,
+                                                                // textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                            }">{{ contact.fields.cny_1.toFixed(0)
+                                                                }}</span>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <div class="d-flex flex-column">
+                                                            <span class="fw-normal">&nbsp;</span>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <template v-if="contact.fields.cny_2">
+                                                        <div class="d-flex flex-column">
+                                                            <span class="fw-normal text-sm" :style="{
+                                                                color: contact.fields.status === '進行中' ? 'red' : 'green',
+                                                                // color: contact.fields.status === '已完成' ? 'green' : null,
+                                                                // textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                            }">{{ contact.fields.cny_2.toFixed(0)
+                                                                }}</span>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <div class="d-flex flex-column">
+                                                            <span class="fw-normal">&nbsp;</span>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <template v-if="contact.fields.cny_3">
+                                                        <div class="d-flex flex-column">
+                                                            <span class="fw-normal text-sm" :style="{
+                                                                color: contact.fields.status === '進行中' ? 'red' : 'green',
+                                                                // color: contact.fields.status === '已完成' ? 'green' : null,
+                                                                // textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                            }">{{ contact.fields.cny_3.toFixed(0)
+                                                                }}</span>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <div class="d-flex flex-column">
+                                                            <span class="fw-normal">&nbsp;</span>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </li>
+                                            <!-- </span> -->
+                                        </div>
+
+
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <div class="d-flex">
                                                 <template v-if="contact.fields.date">
@@ -175,7 +234,7 @@
                                                 <template v-if="contact.fields.cny_usd_1">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_usd_1 }}</span> -->
-                                                        <span class="fw-normal"> {{ contact.fields.cny_usd_1.toFixed(2)
+                                                        <span class="fw-normal text-sm"> {{ contact.fields.cny_usd_1.toFixed(0)
                                                             }}</span>
                                                     </div>
                                                 </template>
@@ -189,7 +248,7 @@
                                                 <template v-if="contact.fields.cny_usd_2">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_usd_2 }}</span> -->
-                                                        <span class="fw-normal"> {{ contact.fields.cny_usd_2.toFixed(2)
+                                                        <span class="fw-normal text-sm"> {{ contact.fields.cny_usd_2.toFixed(0)
                                                             }}</span>
                                                     </div>
                                                 </template>
@@ -203,7 +262,7 @@
                                                 <template v-if="contact.fields.cny_usd_3">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_usd_3 }}</span> -->
-                                                        <span class="fw-normal"> {{ contact.fields.cny_usd_3.toFixed(2)
+                                                        <span class="fw-normal text-sm"> {{ contact.fields.cny_usd_3.toFixed(0)
                                                             }}</span>
                                                     </div>
                                                 </template>
@@ -216,46 +275,46 @@
                                         </li>
 
                                         <li class="list-group-item" style="color: blue;">HKD
-                                            <span class="fw-bold" style="color: blue;">{{ contact.fields.hkd }}</span>
+                                            <span class="fw-normal" style="color: blue;">{{ contact.fields.hkd }}</span>
                                         </li>
 
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             <div class="d-flex">
                                                 <template v-if="contact.fields.hkd_rate_1">
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">{{
+                                                        <span class="fw-normal" style="color: blue;">{{
                                                             contact.fields.hkd_rate_1 }}</span>
                                                     </div>
                                                 </template>
                                                 <template v-else>
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">&nbsp;</span>
+                                                        <span class="fw-normal" style="color: blue;">&nbsp;</span>
                                                     </div>
                                                 </template>
                                             </div>
                                             <div class="d-flex">
                                                 <template v-if="contact.fields.hkd_rate_2">
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">{{
+                                                        <span class="fw-normal" style="color: blue;">{{
                                                             contact.fields.hkd_rate_2 }}</span>
                                                     </div>
                                                 </template>
                                                 <template v-else>
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">&nbsp;</span>
+                                                        <span class="fw-normal" style="color: blue;">&nbsp;</span>
                                                     </div>
                                                 </template>
                                             </div>
                                             <div class="d-flex">
                                                 <template v-if="contact.fields.hkd_rate_3">
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">{{
+                                                        <span class="fw-normal" style="color: blue;">{{
                                                             contact.fields.hkd_rate_3 }}</span>
                                                     </div>
                                                 </template>
                                                 <template v-else>
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">&nbsp;</span>
+                                                        <span class="fw-normal" style="color: blue;">&nbsp;</span>
                                                     </div>
                                                 </template>
                                             </div>
@@ -265,39 +324,39 @@
                                             <div class="d-flex">
                                                 <template v-if="contact.fields.cny_hkd_1">
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">{{
-                                                            contact.fields.cny_hkd_1.toFixed(2) }}</span>
+                                                        <span class="fw-normal text-sm" style="color: blue;">{{
+                                                            contact.fields.cny_hkd_1.toFixed(0) }}</span>
                                                     </div>
                                                 </template>
                                                 <template v-else>
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">&nbsp;</span>
+                                                        <span class="fw-normal" style="color: blue;">&nbsp;</span>
                                                     </div>
                                                 </template>
                                             </div>
                                             <div class="d-flex">
                                                 <template v-if="contact.fields.cny_hkd_2">
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">{{
-                                                            contact.fields.cny_hkd_2.toFixed(2) }}</span>
+                                                        <span class="fw-normal text-sm" style="color: blue;">{{
+                                                            contact.fields.cny_hkd_2.toFixed(0) }}</span>
                                                     </div>
                                                 </template>
                                                 <template v-else>
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">&nbsp;</span>
+                                                        <span class="fw-normal" style="color: blue;">&nbsp;</span>
                                                     </div>
                                                 </template>
                                             </div>
                                             <div class="d-flex">
                                                 <template v-if="contact.fields.cny_hkd_3">
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">{{
-                                                            contact.fields.cny_hkd_3.toFixed(2) }}</span>
+                                                        <span class="fw-normal text-sm" style="color: blue;">{{
+                                                            contact.fields.cny_hkd_3.toFixed(0) }}</span>
                                                     </div>
                                                 </template>
                                                 <template v-else>
                                                     <div class="d-flex flex-column">
-                                                        <span class="fw-bold" style="color: blue;">&nbsp;</span>
+                                                        <span class="fw-normal" style="color: blue;">&nbsp;</span>
                                                     </div>
                                                 </template>
                                             </div>
@@ -391,7 +450,7 @@ export default {
         ]),
 
         formatted_cny_usd_1() {
-            return this.contacts.fields.cny_usd_1.toFixed(2);
+            return this.contacts.fields.cny_usd_1.toFixed(0);
         },
 
         sortedContacts() {

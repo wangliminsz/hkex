@@ -90,28 +90,7 @@
                                     </template>
                                 </div>
 
-                                <!-- <div class="d-flex">
-                                    <div v-for="item in statusOptions" :key="item.id"
-                                        class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" :id="item.id"
-                                            :value="item.value" v-model="item.checked"
-                                            @change="toggleStatus(item.value)">
-                                        <label class="form-check-label" :for="item.id">{{ item.text }}</label>
-                                    </div>
-                                </div> -->
-
                             </div>
-                            <!-- {{  statusOptions }} -->
-                            <!-- selectedStatus: null, // 当前选中的状态
-                            statusOptions: [
-                            { id: 'inlineCheckbox1', value: '進行中', text: '進行中' },
-                            { id: 'inlineCheckbox2', value: '已完成', text: '已完成' }
-                            ] -->
-
-
-
-
-
 
 
                             <div class="row align-items-center">
@@ -119,7 +98,6 @@
                                     <ul class="list-group">
 
                                         <div class="mb-2">
-                                            <!-- <span class="fw-normal"> -->
                                             <li
                                                 class="list-group-item d-flex justify-content-between align-items-center">
                                                 <div class="d-flex">
@@ -128,7 +106,7 @@
                                                             <span class="fw-normal text-sm" :style="{
                                                                 color: contact.fields.status === '進行中' ? 'red' : 'green',
                                                                 // color: contact.fields.status === '已完成' ? 'green' : null,
-                                                                textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                                // textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
                                                             }">{{ contact.fields.cny_1.toFixed(0)
                                                                 }}</span>
                                                         </div>
@@ -145,7 +123,7 @@
                                                             <span class="fw-normal text-sm" :style="{
                                                                 color: contact.fields.status === '進行中' ? 'red' : 'green',
                                                                 // color: contact.fields.status === '已完成' ? 'green' : null,
-                                                                textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                                // textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
                                                             }">{{ contact.fields.cny_2.toFixed(0)
                                                                 }}</span>
                                                         </div>
@@ -162,7 +140,7 @@
                                                             <span class="fw-normal text-sm" :style="{
                                                                 color: contact.fields.status === '進行中' ? 'red' : 'green',
                                                                 // color: contact.fields.status === '已完成' ? 'green' : null,
-                                                                textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                                // textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
                                                             }">{{ contact.fields.cny_3.toFixed(0)
                                                                 }}</span>
                                                         </div>
@@ -329,7 +307,7 @@
 
                                         <li class="list-group-item" style="color: blue;"><span class="mr-1"
                                                 :style="{ textDecoration: contact.fields.hkd > 0 ? null : 'line-through' }">HKD</span>
-                                            <span class="fw-normal text-sm" style="color: blue;">{{ contact.fields.hkd
+                                            <span class="fw-normal" style="color: blue;">{{ contact.fields.hkd
                                                 }}</span>
                                         </li>
 
