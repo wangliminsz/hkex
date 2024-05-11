@@ -128,11 +128,6 @@ export default {
       }
    },
 
-   // //connect inputs
-   // let email = ref('')
-   // let password = ref('')
-   // let username = ref('')
-
    methods: {
       //create account
       async createAccount() {
@@ -162,22 +157,12 @@ export default {
                   const { data, error } = await supabase.auth.signUp({
                      email: this.email,
                      password: this.password,
-                     // options: {
-                     //    data: {
-                     //       username: username.value
-                     //    }
-                     // }
                   })
                   this.loading = false
 
                   if (error === null) {
                      console.log(data)
                      alert('User created. Please check email to Activate.')
-                     // if (Array.isArray(data.user.identities) && data.user.identities.length > 0) {
-                     //    console.log(data.user.identities[0].identity_data.email);
-                     // } else {
-                     //    console.log('User already exists');
-                     // }
                      const currentRoute = this.$router.currentRoute;
                      if (currentRoute.path !== "/login") {
                         this.$router.push("/login"); // Navigate to the login page
@@ -197,7 +182,6 @@ export default {
             }
          }
          catch (error) {
-            // console.log('Error Occurred------->', error)
             console.log(error)
          }
 
@@ -214,49 +198,6 @@ export default {
 
       ...mapActions(['login'])
 
-      //login
-      // async login() {
-      //    const { data, error } = await supabase.auth.signInWithPassword({
-      //       email: this.email,
-      //       password: this.password
-      //    })
-      //    if (error) {
-      //       console.log(error)
-      //    }
-      //    else {
-      //       console.log(data)
-      //       commit('setLocalLogin')
-      //    }
-      // }
-
-      //see current user
-
-      // async function currentUser() {
-
-      //    const localUser = await supabase.auth.getSession();
-      //    if (localUser.data.session) {
-      //       // it'ok
-      //       console.log(localUser)
-      //       console.log('user-id----------->', localUser.data.session.user.id)
-      //       console.log('user-email-------->', localUser.data.session.user.email)
-      //       // it'ok
-      //    }else{
-      //       console.log('not signin')
-      //    }
-      // }
-
-      //logout
-
-      // async function logout() {
-      //    const error = await supabase.auth.signOut();
-      //    console.log(error)
-      //    if (error.error === null) {
-      //       console.log('logout ok')
-      //    }
-      //    else {
-      //       console.log(error)
-      //    }
-      // }
    }
 }
 
@@ -269,7 +210,6 @@ export default {
 
 .input::placeholder {
    color: #ccc;
-   /* Set the placeholder text color to light grey */
 }
 
 span {
