@@ -64,7 +64,7 @@
                                                 <div class="d-flex flex-column">
                                                     <span class="fw-normal" :style="{
                                                         color: contact.fields.status === '進行中' ? 'red' : 'green',
-                                                        textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                        // textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
                                                     }">{{ contact.fields.cny_1.toFixed(0)
                                                         }}</span>
                                                 </div>
@@ -80,7 +80,7 @@
                                                 <div class="d-flex flex-column">
                                                     <span class="fw-normal" :style="{
                                                         color: contact.fields.status === '進行中' ? 'red' : 'green',
-                                                        textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                        // textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
                                                     }">{{ contact.fields.cny_2.toFixed(0)
                                                         }}</span>
                                                 </div>
@@ -96,7 +96,7 @@
                                                 <div class="d-flex flex-column">
                                                     <span class="fw-normal" :style="{
                                                         color: contact.fields.status === '進行中' ? 'red' : 'green',
-                                                        textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                        // textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
                                                     }">{{ contact.fields.cny_3.toFixed(0)
                                                         }}</span>
                                                 </div>

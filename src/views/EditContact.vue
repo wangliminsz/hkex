@@ -31,10 +31,6 @@
       </div>
     </div>
 
-    <!-- <pre> {{ contact.fields }}</pre> -->
-    <!-- <pre> {{ upstreams }}</pre> -->
-    <!-- <pre> {{ channels }}</pre> -->
-
     <div class="container mt-3" v-if="!loading && safeLoading">
       <div class="row">
         <div class="col-md-4">
