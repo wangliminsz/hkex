@@ -16,7 +16,7 @@ supa_key = supabaseKey_vite.replace(/^"|"$/g, '')
 export const supabase = createClient(supa_url, supa_key, {
     auth: {
         signupOptions: {
-            redirectTo: 'https://pass2024.vercel.app' // your custom redirect URL after sign up
+            redirectTo: 'https://hkex.vercel.app' // your custom redirect URL after sign up
         }
     }
 });
