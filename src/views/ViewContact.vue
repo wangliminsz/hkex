@@ -31,334 +31,339 @@
         </div>
 
         <div class="container mt-3" v-if="!loading && safeLoading">
+            <div class="row">
+                <div class="col-md-4">
 
-            <div class="ml-1 mb-0" v-if="safeContactStatus">
-                <template v-if="contact.fields.status">
-                    <div class="d-flex flex-column">
-                        <span class="fw-normal" :style="{
-                            color: contact.fields.status === '進行中' ? 'red' : 'green',
-                            textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
-                        }">
-                            {{ contact.fields.status }}
-                        </span>
+                    <div class="ml-1 mb-0" v-if="safeContactStatus">
+                        <template v-if="contact.fields.status">
+                            <div class="d-flex flex-column">
+                                <span class="fw-normal" :style="{
+                                    color: contact.fields.status === '進行中' ? 'red' : 'green',
+                                    textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                }">
+                                    {{ contact.fields.status }}
+                                </span>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <div class="d-flex flex-column">
+                                <span class="fw-normal">&nbsp;</span>
+                            </div>
+                        </template>
                     </div>
-                </template>
-                <template v-else>
-                    <div class="d-flex flex-column">
-                        <span class="fw-normal">&nbsp;</span>
-                    </div>
-                </template>
-            </div>
 
-            <div class="row align-items-center">
-                <div class="col-sm-10">
-                    <ul class="list-group">
+                    <div class="row align-items-center">
+                        <div class="col-sm-10">
+                            <ul class="list-group">
 
 
-                        <div class="mb-2">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div class="d-flex">
-                                    <template v-if="safeCny1Status">
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-normal" :style="{
-                                                color: contact.fields.status === '進行中' ? 'red' : 'green',
-                                                textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
-                                            }">{{ contact.fields.cny_1.toFixed(0)
-                                                }}</span>
+                                <div class="mb-2">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div class="d-flex">
+                                            <template v-if="safeCny1Status">
+                                                <div class="d-flex flex-column">
+                                                    <span class="fw-normal" :style="{
+                                                        color: contact.fields.status === '進行中' ? 'red' : 'green',
+                                                        textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                    }">{{ contact.fields.cny_1.toFixed(0)
+                                                        }}</span>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <div class="d-flex flex-column">
+                                                    <span class="fw-normal">&nbsp;</span>
+                                                </div>
+                                            </template>
                                         </div>
-                                    </template>
-                                    <template v-else>
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-normal">&nbsp;</span>
+                                        <div class="d-flex">
+                                            <template v-if="safeCny2Status">
+                                                <div class="d-flex flex-column">
+                                                    <span class="fw-normal" :style="{
+                                                        color: contact.fields.status === '進行中' ? 'red' : 'green',
+                                                        textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                    }">{{ contact.fields.cny_2.toFixed(0)
+                                                        }}</span>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <div class="d-flex flex-column">
+                                                    <span class="fw-normal">&nbsp;</span>
+                                                </div>
+                                            </template>
                                         </div>
-                                    </template>
+                                        <div class="d-flex">
+                                            <template v-if="safeCny3Status">
+                                                <div class="d-flex flex-column">
+                                                    <span class="fw-normal" :style="{
+                                                        color: contact.fields.status === '進行中' ? 'red' : 'green',
+                                                        textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
+                                                    }">{{ contact.fields.cny_3.toFixed(0)
+                                                        }}</span>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <div class="d-flex flex-column">
+                                                    <span class="fw-normal">&nbsp;</span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </li>
                                 </div>
-                                <div class="d-flex">
-                                    <template v-if="safeCny2Status">
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-normal" :style="{
-                                                color: contact.fields.status === '進行中' ? 'red' : 'green',
-                                                textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
-                                            }">{{ contact.fields.cny_2.toFixed(0)
-                                                }}</span>
-                                        </div>
-                                    </template>
-                                    <template v-else>
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-normal">&nbsp;</span>
-                                        </div>
-                                    </template>
-                                </div>
-                                <div class="d-flex">
-                                    <template v-if="safeCny3Status">
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-normal" :style="{
-                                                color: contact.fields.status === '進行中' ? 'red' : 'green',
-                                                textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
-                                            }">{{ contact.fields.cny_3.toFixed(0)
-                                                }}</span>
-                                        </div>
-                                    </template>
-                                    <template v-else>
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-normal">&nbsp;</span>
-                                        </div>
-                                    </template>
-                                </div>
-                            </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.date">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">{{ contact.fields.date }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.desc">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">{{ contact.fields.desc }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </li>
+
+                                <!-- {{ upstream.fields.name }} -->
+
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+                                        <template v-if="upstream.fields.name">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">{{ upstream.fields.name }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex">
+                                        <template v-if="channel.fields.name">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">{{ channel.fields.name }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </li>
+
+
+                                <li class="list-group-item"><span class="mr-1"
+                                        :style="{ textDecoration: contact.fields.usd > 0 ? null : 'line-through' }">USD</span>
+                                    <span class="fw-normal">{{ contact.fields.usd }}</span>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.usd_rate_1">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">{{ contact.fields.usd_rate_1
+                                                    }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.usd_rate_2">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">{{ contact.fields.usd_rate_2
+                                                    }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.usd_rate_3">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">{{ contact.fields.usd_rate_3
+                                                    }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.cny_usd_1">
+                                            <div class="d-flex flex-column">
+                                                <!-- <span class="fw-normal">{{ contact.fields.cny_usd_1 }}</span> -->
+                                                <span class="fw-normal text-sm"> {{
+                                                    contact.fields.cny_usd_1.toFixed(0)
+                                                    }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.cny_usd_2">
+                                            <div class="d-flex flex-column">
+                                                <!-- <span class="fw-normal">{{ contact.fields.cny_usd_2 }}</span> -->
+                                                <span class="fw-normal text-sm"> {{
+                                                    contact.fields.cny_usd_2.toFixed(0)
+                                                    }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.cny_usd_3">
+                                            <div class="d-flex flex-column">
+                                                <!-- <span class="fw-normal">{{ contact.fields.cny_usd_3 }}</span> -->
+                                                <span class="fw-normal text-sm"> {{
+                                                    contact.fields.cny_usd_3.toFixed(0)
+                                                    }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item" style="color: blue;"><span class="mr-1"
+                                        :style="{ textDecoration: contact.fields.hkd > 0 ? null : 'line-through' }">HKD</span>
+                                    <span class="fw-normal text-sm" style="color: blue;">{{ contact.fields.hkd
+                                        }}</span>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.hkd_rate_1">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">{{
+                                                    contact.fields.hkd_rate_1 }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.hkd_rate_2">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">{{
+                                                    contact.fields.hkd_rate_2 }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.hkd_rate_3">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">{{
+                                                    contact.fields.hkd_rate_3 }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.cny_hkd_1">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">{{
+                                                    contact.fields.cny_hkd_1.toFixed(0) }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.cny_hkd_2">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">{{
+                                                    contact.fields.cny_hkd_2.toFixed(0) }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex">
+                                        <template v-if="contact.fields.cny_hkd_3">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">{{
+                                                    contact.fields.cny_hkd_3.toFixed(0) }}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </li>
+
+                                <!-- v-if="contact && contact.fields && contact.fields.memo" -->
+
+                                <textarea class="list-group-item" id="txtarea" cols="30" rows="6"
+                                    v-model="contact.fields.memo">
+            </textarea>
+
+                            </ul>
                         </div>
+                    </div>
 
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex">
-                                <template v-if="contact.fields.date">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">{{ contact.fields.date }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="d-flex">
-                                <template v-if="contact.fields.desc">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">{{ contact.fields.desc }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                        </li>
-
-                        <!-- {{ upstream.fields.name }} -->
-
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex">
-                                <template v-if="upstream.fields.name">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">{{ upstream.fields.name }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="d-flex">
-                                <template v-if="channel.fields.name">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">{{ channel.fields.name }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                        </li>
-
-
-                        <li class="list-group-item"><span class="mr-1"
-                                :style="{ textDecoration: contact.fields.usd > 0 ? null : 'line-through' }">USD</span>
-                            <span class="fw-normal">{{ contact.fields.usd }}</span>
-                        </li>
-
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex">
-                                <template v-if="contact.fields.usd_rate_1">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">{{ contact.fields.usd_rate_1
-                                            }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="d-flex">
-                                <template v-if="contact.fields.usd_rate_2">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">{{ contact.fields.usd_rate_2
-                                            }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="d-flex">
-                                <template v-if="contact.fields.usd_rate_3">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">{{ contact.fields.usd_rate_3
-                                            }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex">
-                                <template v-if="contact.fields.cny_usd_1">
-                                    <div class="d-flex flex-column">
-                                        <!-- <span class="fw-normal">{{ contact.fields.cny_usd_1 }}</span> -->
-                                        <span class="fw-normal text-sm"> {{
-                                            contact.fields.cny_usd_1.toFixed(0)
-                                        }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="d-flex">
-                                <template v-if="contact.fields.cny_usd_2">
-                                    <div class="d-flex flex-column">
-                                        <!-- <span class="fw-normal">{{ contact.fields.cny_usd_2 }}</span> -->
-                                        <span class="fw-normal text-sm"> {{
-                                            contact.fields.cny_usd_2.toFixed(0)
-                                        }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="d-flex">
-                                <template v-if="contact.fields.cny_usd_3">
-                                    <div class="d-flex flex-column">
-                                        <!-- <span class="fw-normal">{{ contact.fields.cny_usd_3 }}</span> -->
-                                        <span class="fw-normal text-sm"> {{
-                                            contact.fields.cny_usd_3.toFixed(0)
-                                        }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item" style="color: blue;"><span class="mr-1"
-                                :style="{ textDecoration: contact.fields.hkd > 0 ? null : 'line-through' }">HKD</span>
-                            <span class="fw-normal text-sm" style="color: blue;">{{ contact.fields.hkd
-                                }}</span>
-                        </li>
-
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex">
-                                <template v-if="contact.fields.hkd_rate_1">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">{{
-                                            contact.fields.hkd_rate_1 }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="d-flex">
-                                <template v-if="contact.fields.hkd_rate_2">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">{{
-                                            contact.fields.hkd_rate_2 }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="d-flex">
-                                <template v-if="contact.fields.hkd_rate_3">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">{{
-                                            contact.fields.hkd_rate_3 }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex">
-                                <template v-if="contact.fields.cny_hkd_1">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">{{
-                                            contact.fields.cny_hkd_1.toFixed(0) }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="d-flex">
-                                <template v-if="contact.fields.cny_hkd_2">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">{{
-                                            contact.fields.cny_hkd_2.toFixed(0) }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                            <div class="d-flex">
-                                <template v-if="contact.fields.cny_hkd_3">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">{{
-                                            contact.fields.cny_hkd_3.toFixed(0) }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-normal text-sm" style="color: blue;">&nbsp;</span>
-                                    </div>
-                                </template>
-                            </div>
-                        </li>
-
-                        <!-- v-if="contact && contact.fields && contact.fields.memo" -->
-
-                        <textarea class="list-group-item" id="txtarea" cols="30" rows="6" v-model="contact.fields.memo">
-                        </textarea>
-
-                    </ul>
                 </div>
             </div>
-
         </div>
 
     </div>
