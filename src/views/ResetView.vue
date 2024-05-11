@@ -144,7 +144,6 @@ export default {
                      redirectTo: 'https://hkex.vercel.app/resetpassword01',
                   })
                   // 'https://antnotify.vercel.app/resetpassword01'
-                  // https://pass2024.vercel.app/resetpassword01
                   // 'https://localhost:5173/resetpassword01'
 
                   this.successMessage = 'A password reset email has been sent to your inbox.'
