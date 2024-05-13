@@ -1,20 +1,28 @@
 import axios from "axios";
-
 import airtable from 'airtable';
 
-export class ContactService {
-  static serverSupaURL = `https://phgwjhhylafzchotgoay.supabase.co/rest/v1`;
-  static supa_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoZ3dqaGh5bGFmemNob3Rnb2F5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODUwNzAxMjksImV4cCI6MjAwMDY0NjEyOX0.2lOoBm8ElUM87ACf4zXZTfwoBJdqc84VPdtABvhx4Nc"
+// ~~~~~~~~~~~~~~~~~~~~
 
-  // ant notify 2024-05
-  // static serverAirURL = `https://api.airtable.com/v0/appoblgGwVGW6XWbQ`;
-  // static air_token = "patqeUrC7eLbBBjx5.3fa0ab9407f2512416c9ae44562fa2a83c5c4231022022c745b418e940e79667"
+const airtableUrl_vite = process.env.VITE_air_url;
+const airtableKey_vite = process.env.VITE_air_key;
+
+let air_url = ''
+air_url = airtableUrl_vite.replace(/^"|"$/g, '')
+
+let air_key = ''
+air_key = airtableKey_vite.replace(/^"|"$/g, '')
+
+// ~~~~~~~~~~~~~~~~~~~~
+
+export class ContactService {
 
   // hkex 2024-05
-  static serverAirURL_hk = `https://api.airtable.com/v0/apppvin1yOfyMuXT4`;
-  static air_token_hk = "patCFytgEQ54MUNDB.04ff3535415911314c79dac6a0ac4be97c907ab0f942d2e5de7ae2346676b2b1"
+  static serverAirURL_hk = air_url;
+  static air_token_hk = air_key
 
   static getHK_main() {
+
+    console.log("hk_Main--->", this.serverAirURL_hk)
 
     let dataURL = `${this.serverAirURL_hk}/main`;
     let headers = {
@@ -61,45 +69,51 @@ export class ContactService {
 
   static async deleteHKRecord(contactId, userId) {
 
-    airtable.configure({
-      apiKey: `${this.air_token_hk}`,
-      endpointUrl: 'https://api.airtable.com'
-    });
+    if (contactId) {
 
-    // select the Airtable base and table you want to insert the record into
-    const base = airtable.base('apppvin1yOfyMuXT4');
-    const table = base('tbl2fcihRAPrJHMYt');
+      airtable.configure({
+        apiKey: `${this.air_token_hk}`,
+        endpointUrl: 'https://api.airtable.com'
+      });
 
-    const recordQuery = await table.select({ filterByFormula: `{id} = ${contactId}` }).firstPage();
+      // select the Airtable base and table you want to insert the record into
+      const base = airtable.base('apppvin1yOfyMuXT4');
+      const table = base('tbl2fcihRAPrJHMYt');
 
-    let airId = ''
+      const recordQuery = await table.select({ filterByFormula: `{id} = ${contactId}` }).firstPage();
 
-    if (recordQuery.length > 0) {
-      const record = recordQuery[0];
-      // console.log(`Airtable record ID for ID ${contactId} is ${record.id}`);
-      airId = record.id
-    } else {
-      console.log(`No record found with ID ${contactId}`);
-    }
+      let airId = ''
 
-    if (airId) {
-      // let dataURL = `${this.serverAirURL}/thai_notify?records%5B%5D=${airId}&user_id=${userId}`;
-      let dataURL = `${this.serverAirURL_hk}/main?records%5B%5D=${airId}`;
-      let headers = {
-        'Authorization': `Bearer ${this.air_token_hk}`
-      };
-      return axios.delete(dataURL, { headers: headers });
+      if (recordQuery.length > 0) {
+        const record = recordQuery[0];
+        // console.log(`Airtable record ID for ID ${contactId} is ${record.id}`);
+        airId = record.id
+      } else {
+        console.log(`No record found with ID ${contactId}`);
+      }
+
+      if (airId) {
+        // let dataURL = `${this.serverAirURL}/thai_notify?records%5B%5D=${airId}&user_id=${userId}`;
+        let dataURL = `${this.serverAirURL_hk}/main?records%5B%5D=${airId}`;
+        let headers = {
+          'Authorization': `Bearer ${this.air_token_hk}`
+        };
+        return axios.delete(dataURL, { headers: headers });
+      }
     }
   }
 
   static async getHKRecord(contactId, userId) {
 
-    // AND({id}=${contactId}, {user_id}='${userId}')
-    let dataURL = `${this.serverAirURL_hk}/main?filterByFormula=({id}=${contactId})`
-    let headers = {
-      'Authorization': `Bearer ${this.air_token_hk}`
-    };
-    return axios.get(dataURL, { headers: headers });
+    if (contactId) {
+
+      // AND({id}=${contactId}, {user_id}='${userId}')
+      let dataURL = `${this.serverAirURL_hk}/main?filterByFormula=({id}=${contactId})`
+      let headers = {
+        'Authorization': `Bearer ${this.air_token_hk}`
+      };
+      return axios.get(dataURL, { headers: headers });
+    }
   }
 
   static getUpstreams(userId) {
@@ -113,6 +127,7 @@ export class ContactService {
     return axios.get(dataURL, { headers: headers });
   }
 
+
   static getChannels(userId) {
 
     let dataURL = `${this.serverAirURL_hk}/channel`;
@@ -122,33 +137,38 @@ export class ContactService {
     };
 
     return axios.get(dataURL, { headers: headers });
+
   }
 
-  // static getGroup(contact) {
-  //   let groupId = contact.groupId;
-  //   let dataURL = `${this.serverURL}/groups/${groupId}`;
-  //   return axios.get(dataURL);
-  // }
 
   static getUpstream(upId) {
-    let dataURL = `${this.serverAirURL_hk}/upstream?filterByFormula=({id}=${upId})`;
-    // console.log('from js--->', dataURL)
-    let headers = {
-      'Content-Type': 'application/json', // Example header
-      'Authorization': `Bearer ${this.air_token_hk}`
-    };
 
-    return axios.get(dataURL, { headers: headers });
+    if (upId) {
+
+      let dataURL = `${this.serverAirURL_hk}/upstream?filterByFormula=({id}=${upId})`;
+      // console.log('from js--->', dataURL)
+      let headers = {
+        'Content-Type': 'application/json', // Example header
+        'Authorization': `Bearer ${this.air_token_hk}`
+      };
+
+      return axios.get(dataURL, { headers: headers });
+    }
   }
 
   static getChannel(chId) {
-    let dataURL = `${this.serverAirURL_hk}/channel?filterByFormula=({id}=${chId})`;
-    let headers = {
-      'Content-Type': 'application/json', // Example header
-      'Authorization': `Bearer ${this.air_token_hk}`
-    };
 
-    return axios.get(dataURL, { headers: headers });
+    if (chId) {
+
+      let dataURL = `${this.serverAirURL_hk}/channel?filterByFormula=({id}=${chId})`;
+      let headers = {
+        'Content-Type': 'application/json', // Example header
+        'Authorization': `Bearer ${this.air_token_hk}`
+      };
+
+      return axios.get(dataURL, { headers: headers });
+
+    }
   }
 
   // by chatGPT

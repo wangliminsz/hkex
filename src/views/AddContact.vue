@@ -2,8 +2,25 @@
   <div>
     <div class="container mt-3">
       <div class="row">
-        <div class="col">
-          <p class="h3 text-success fw-bold">Add</p>
+        <div class="col-md-4">
+
+          <div class="d-flex justify-content-start">
+
+            <div>
+              <p class="h3 text-success fw-bold">Add</p>
+            </div>
+
+
+            <div class="d-flex align-items-baseline">
+              <span class="mr-2">USD <input type="radio" name="currency" value="usd" v-model="selectedCurrency"></span>
+              <span>HKD <input type="radio" name="currency" value="hkd" v-model="selectedCurrency"> </span>
+            </div>
+
+
+
+          </div>
+
+
         </div>
       </div>
     </div>
@@ -41,6 +58,7 @@
             {{ upstreams.records}} -->
 
             <div class="d-flex justify-content-between align-items-center">
+
               <div class="mb-2 mr-5">
                 <select v-model="contact.status" class="form-control">
                   <option value="進行中">進行中</option>
@@ -48,123 +66,210 @@
                 </select>
               </div>
 
-              <div class="mb-2">
-                <div class="form-control date-picker-container">
-                  <!-- <DatePicker v-model="contact.date" /> -->
-                  <DatePicker v-model="selectedDate" />
+              <div class="mb-2 col-md-12">
+                <input v-model="contact.desc" type="text" class="form-control" style="width: 250px;"
+                  placeholder="Input Name/Desc ..." :class="{ 'is-invalid': contact.desc && !isValidDesc }" />
+                <div v-if="contact.desc && !isValidDesc" class="invalid-feedback">
+                  Please enter a valid Description.
                 </div>
               </div>
 
             </div>
 
             <div class="mb-2">
-              <input v-model="contact.desc" type="text" class="form-control" placeholder="Input Desc ..."
-                :class="{ 'is-invalid': contact.desc && !isValidDesc }" />
-              <div v-if="contact.desc && !isValidDesc" class="invalid-feedback">
-                Please enter a valid Description.
+              <div class="form-control date-picker-container">
+                <!-- <DatePicker v-model="contact.date" /> -->
+                <DatePicker v-model="selectedDate" />
               </div>
             </div>
 
-            <div class="mb-2">
-              <select v-model="contact.upstream" class="form-control" id="supplierSelect"
-                v-if="upstreams.records.length > 0">
-                <option class="text-danger" value="" selected>Select Supplier</option>
-                <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
-                  {{ upstream.fields.name }}
-                </option>
-              </select>
-            </div>
+            <!-- usd usd usd -->
 
-            <div class="mb-2">
-              <select v-model="contact.channel" class="form-control" id="supplierSelect"
-                v-if="channels.records.length > 0">
-                <option class="text-danger" value="" selected>Select Channel</option>
-                <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
-                  {{ channel.fields.name }}
-                </option>
-              </select>
-            </div>
-
-            <div class="mb-2">
-              <input v-model="contact.usd" type="number" step="0.0001" class="form-control" placeholder="USD ..."
-                :class="{
-                  'is-invalid': contact.usd && !isValidUSD,
-                }" />
-              <div v-if="contact.usd && !isValidUSD" class="invalid-feedback">
-                Please enter a valid USD amount.
-              </div>
-            </div>
-
-            <div class="d-flex  justify-content-between align-items-center">
-              <div class="mb-2 me-3"> <!-- me-3 provides margin to the right -->
-                <input v-model="contact.usd_rate_1" type="number" step="0.0001" class="form-control" :class="{
-                  'is-invalid': contact.usd_rate_1 && !isValidUSD_rate1,
-                }" />
-                <div v-if="contact.usd_rate_1 && !isValidUSD_rate1" class="invalid-feedback">
-                  Please enter a valid USD rate.
-                </div>
-              </div>
-
-              <div class="mb-2 me-3">
-                <input v-model="contact.usd_rate_2" type="number" step="0.0001" class="form-control" :class="{
-                  'is-invalid': contact.usd_rate_2 && !isValidUSD_rate2,
-                }" />
-                <div v-if="contact.usd_rate_2 && !isValidUSD_rate2" class="invalid-feedback">
-                  Please enter a valid USD rate.
-                </div>
-              </div>
+            <div>
 
               <div class="mb-2">
-                <input v-model="contact.usd_rate_3" type="number" step="0.0001" class="form-control" :class="{
-                  'is-invalid': contact.usd_rate_3 && !isValidUSD_rate3,
-                }" />
-                <div v-if="contact.usd_rate_3 && !isValidUSD_rate3" class="invalid-feedback">
-                  Please enter a valid USD rate.
+                <input v-model="contact.usd" type="number" step="0.0001" class="form-control"
+                  :disabled="selectedCurrency === 'hkd'" placeholder="Input USD Amount..." :class="{
+                    'is-invalid': contact.usd && !isValidUSD,
+                  }" />
+                <div v-if="contact.usd && !isValidUSD" class="invalid-feedback">
+                  Please enter a valid USD amount.
                 </div>
               </div>
 
+              <!-- usd rate 1 -->
+
+              <div class="d-flex  justify-content-between align-items-center">
+                <div class="mb-2 me-3"> <!-- me-3 provides margin to the right -->
+                  <input v-model="contact.usd_rate_1" type="number" step="0.0001" class="form-control"
+                    :disabled="selectedCurrency === 'hkd'" :class="{
+                      'is-invalid': contact.usd_rate_1 && !isValidUSD_rate1,
+                    }" />
+                  <div v-if="contact.usd_rate_1 && !isValidUSD_rate1" class="invalid-feedback">
+                    Please enter a valid USD rate.
+                  </div>
+                </div>
+
+                <div class="mb-2 col-md-12">
+                  <select v-model="contact.upstream" class="form-control" :disabled="selectedCurrency === 'hkd'" style="width: 250px;" id="supplierSelect"
+                    v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>Layer 1</option>
+                    <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
+                      {{ upstream.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+
+
+
+              </div>
+
+              <!-- usd rate 2 -->
+
+              <div class="d-flex  justify-content-between align-items-center">
+
+
+                <div class="mb-2 me-3">
+                  <input v-model="contact.usd_rate_2" type="number" step="0.0001" class="form-control"
+                    :disabled="selectedCurrency === 'hkd'" :class="{
+                      'is-invalid': contact.usd_rate_2 && !isValidUSD_rate2,
+                    }" />
+                  <div v-if="contact.usd_rate_2 && !isValidUSD_rate2" class="invalid-feedback">
+                    Please enter a valid USD rate.
+                  </div>
+                </div>
+
+                <div class="mb-2 col-md-12">
+                  <select v-model="contact.channel" class="form-control" :disabled="selectedCurrency === 'hkd'" style="width: 250px;" id="supplierSelect"
+                    v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>Layer 2</option>
+                    <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
+                      {{ channel.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+              </div>
+
+
+              <!-- usd rate 3 -->
+
+              <div class="d-flex  justify-content-between align-items-center">
+
+
+                <div class="mb-2 me-3">
+                  <input v-model="contact.usd_rate_3" type="number" step="0.0001" class="form-control"
+                    :disabled="selectedCurrency === 'hkd'" :class="{
+                      'is-invalid': contact.usd_rate_3 && !isValidUSD_rate3,
+                    }" />
+                  <div v-if="contact.usd_rate_3 && !isValidUSD_rate3" class="invalid-feedback">
+                    Please enter a valid USD rate.
+                  </div>
+                </div>
+
+
+              </div>
 
             </div>
-            <!-- style="color: blue;" -->
-            <div class="mb-2">
-              <input v-model="contact.hkd" type="number" step="0.0001" class="form-control" placeholder="HKD ..."
-                :class="{
-                  'is-invalid': contact.hkd && !isValidHKD,
-                }" />
-              <div v-if="contact.hkd && !isValidHKD" class="invalid-feedback">
-                Please enter a valid HKD amount.
-              </div>
-            </div>
 
-            <div class="d-flex  justify-content-between align-items-center">
-              <div class="mb-2 me-3"> <!-- me-3 provides margin to the right -->
-                <input v-model="contact.hkd_rate_1" type="number" step="0.0001" class="form-control" :class="{
-                  'is-invalid': contact.hkd_rate_1 && !isValidHKD_rate1,
-                }" />
-                <div v-if="contact.hkd_rate_1 && !isValidHKD_rate1" class="invalid-feedback">
-                  Please enter a valid HKD rate.
-                </div>
-              </div>
+            <!-- usd usd usd -->
 
-              <div class="mb-2 me-3">
-                <input v-model="contact.hkd_rate_2" type="number" step="0.0001" class="form-control" :class="{
-                  'is-invalid': contact.hkd_rate_2 && !isValidHKD_rate2,
-                }" />
-                <div v-if="contact.hkd_rate_2 && !isValidHKD_rate2" class="invalid-feedback">
-                  Please enter a valid HKD rate.
-                </div>
-              </div>
+
+            <!-- hkd hkd hkd -->
+
+            <div>
 
               <div class="mb-2">
-                <input v-model="contact.hkd_rate_3" type="number" step="0.0001" class="form-control" :class="{
-                  'is-invalid': contact.hkd_rate_3 && !isValidHKD_rate3,
-                }" />
-                <div v-if="contact.hkd_rate_3 && !isValidHKD_rate3" class="invalid-feedback">
-                  Please enter a valid HKD rate.
+                <input v-model="contact.hkd" type="number" step="0.0001" class="form-control"
+                  :disabled="selectedCurrency === 'usd'" placeholder="Input HKD Amount ..." :class="{
+                    'is-invalid': contact.hkd && !isValidHKD,
+                  }" />
+                <div v-if="contact.hkd && !isValidHKD" class="invalid-feedback">
+                  Please enter a valid hkd amount.
                 </div>
               </div>
 
+              <!-- hkd rate 1 -->
+
+              <div class="d-flex  justify-content-between align-items-center">
+                <div class="mb-2 me-3"> <!-- me-3 provides margin to the right -->
+                  <input v-model="contact.hkd_rate_1" type="number" step="0.0001" class="form-control"
+                    :disabled="selectedCurrency === 'usd'" :class="{
+                      'is-invalid': contact.hkd_rate_1 && !isValidHKD_rate1,
+                    }" />
+                  <div v-if="contact.hkd_rate_1 && !isValidHKD_rate1" class="invalid-feedback">
+                    Please enter a valid hkd rate.
+                  </div>
+                </div>
+
+                <div class="mb-2 col-md-12">
+                  <select v-model="contact.upstream" class="form-control" :disabled="selectedCurrency === 'usd'" style="width: 250px;" id="supplierSelect"
+                    v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>Layer 1</option>
+                    <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
+                      {{ upstream.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+
+
+
+              </div>
+
+              <!-- hkd rate 2 -->
+
+              <div class="d-flex  justify-content-between align-items-center">
+
+
+                <div class="mb-2 me-3">
+                  <input v-model="contact.hkd_rate_2" type="number" step="0.0001" class="form-control"
+                    :disabled="selectedCurrency === 'usd'" :class="{
+                      'is-invalid': contact.hkd_rate_2 && !isValidHKD_rate2,
+                    }" />
+                  <div v-if="contact.hkd_rate_2 && !isValidHKD_rate2" class="invalid-feedback">
+                    Please enter a valid hkd rate.
+                  </div>
+                </div>
+
+                <div class="mb-2 col-md-12">
+                  <select v-model="contact.channel" class="form-control" :disabled="selectedCurrency === 'usd'" style="width: 250px;" id="supplierSelect"
+                    v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>Layer 2</option>
+                    <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
+                      {{ channel.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+              </div>
+
+
+              <!-- hkd rate 3 -->
+
+              <div class="d-flex  justify-content-between align-items-center">
+
+
+                <div class="mb-2 me-3">
+                  <input v-model="contact.hkd_rate_3" type="number" step="0.0001" class="form-control"
+                    :disabled="selectedCurrency === 'usd'" :class="{
+                      'is-invalid': contact.hkd_rate_3 && !isValidHKD_rate3,
+                    }" />
+                  <div v-if="contact.hkd_rate_3 && !isValidHKD_rate3" class="invalid-feedback">
+                    Please enter a valid hkd rate.
+                  </div>
+                </div>
+
+
+              </div>
+
+
             </div>
+
+            <!-- hkd hkd hkd -->
+
+
 
             <div class="mb-2">
               <textarea v-model="contact.memo" class="form-control" rows="5" placeholder="Memo ..."
@@ -174,6 +279,9 @@
               </div>
             </div>
 
+
+
+
             <div class="d-flex flex-wrap mt-3">
               <div class="col-md-3">
                 <input type="submit" class="btn btn-success" value="Create" :disabled="!isFormValid" />
@@ -182,12 +290,17 @@
                 <router-link to="/contacts" class="btn btn-success">Cancel</router-link>
               </div>
             </div>
+
+
           </form>
+
+
+
         </div>
       </div>
     </div>
 
-    
+
   </div>
 </template>
 
@@ -197,6 +310,9 @@ import { supabase } from "@/clients/supabase";
 import mySpinner from "@/components/Spinner.vue";
 
 import DatePicker from 'vue3-datepicker'
+
+import { mapGetters } from 'vuex'
+// import { mapActions } from 'vuex'
 
 export default {
   name: "AddContact",
@@ -208,6 +324,8 @@ export default {
 
   data() {
     return {
+
+      selectedCurrency: 'usd',
 
       selectedDate: new Date(), // initially today's date
 
@@ -227,6 +345,7 @@ export default {
         hkd_rate_1: 0.931,
         hkd_rate_2: 0.942,
         hkd_rate_3: 0.953,
+        user_email: '',
       },
 
       currentUserId: "",
@@ -259,6 +378,11 @@ export default {
   },
 
   computed: {
+
+    ...mapGetters([
+      'isLoggedIn',
+      'whichUser'
+    ]),
 
     isValidDesc() {
       return Boolean(this.contact.desc);
@@ -339,6 +463,7 @@ export default {
 
       if (this.currentUserId) {
         try {
+          this.contact.user_email = this.whichUser
           this.contact.create_user_id = this.currentUserId;
           this.contact.update_date = new Date().toISOString();
           this.contact.upstream = String(this.contact.upstream);

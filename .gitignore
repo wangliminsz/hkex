@@ -1,4 +1,5 @@
 zz*.http
+.env
 
 # Logs
 logs
