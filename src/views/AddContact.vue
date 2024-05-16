@@ -463,7 +463,7 @@
             <div v-if="selectedCurrency === 'oth'">
 
               <span v-if="contact.oth_name">{{ contact.oth_name }}</span><span v-else>Others</span>
-              
+
               <div class="mb-2">
                 <input v-model="contact.oth" type="number" step="0.0001" class="form-control"
                   :disabled="selectedCurrency !== 'oth'" placeholder="Input Amount..." :class="{
@@ -843,21 +843,17 @@ export default {
     },
 
     isFormValid() {
-      return (
-        (this.isValidUSD || this.isValidHKD || this.isValidOTH) &&
-        this.isValidOTH_name
-        // this.isValidDesc &&
-        // this.isValidUSD_rate1 &&
-        // this.isValidUSD_rate2 &&
-        // this.isValidUSD_rate3 &&
-        // this.isValidHKD_rate1 &&
-        // this.isValidHKD_rate2 &&
-        // this.isValidHKD_rate3
-        // this.isValidRentStart &&
-        // this.isValidRentEnd
-        // this.isValidGroup
-      );
-    },
+
+      if (this.selectedCurrency === 'oth') {
+        return (
+          (this.isValidUSD || this.isValidHKD || this.isValidOTH) &&
+          this.isValidOTH_name);
+      }else{
+        return (
+          (this.isValidUSD || this.isValidHKD || this.isValidOTH) );
+      }
+    }
+    
   },
 
   methods: {
@@ -959,7 +955,7 @@ export default {
           this.contact.oth_rate_2 = ''
           this.contact.oth_rate_3 = ''
         }
-        
+
         if (newVal === 'hkd') {
           this.contact.usd = ''
           this.contact.usd_rate_1 = ''
