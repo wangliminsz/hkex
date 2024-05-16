@@ -170,7 +170,7 @@
                                                 </template>
                                             </div>
 
-                                            <div class="d-flex" style="width: 60px;">
+                                            <div class="d-flex ml-6" style="width: 60px;">
                                                 <template v-if="contact.fields.cny_usd_1">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_usd_1 }}</span> -->
@@ -263,7 +263,7 @@
                                                 </template>
                                             </div>
 
-                                            <div class="d-flex" style="width: 60px;">
+                                            <div class="d-flex ml-6" style="width: 60px;">
                                                 <template v-if="contact.fields.cny_usd_2">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_usd_2 }}</span> -->
@@ -360,7 +360,7 @@
                                                 </template>
                                             </div>
 
-                                            <div class="d-flex" style="width: 60px;">
+                                            <div class="d-flex ml-6" style="width: 60px;">
                                                 <template v-if="contact.fields.cny_usd_3">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_usd_3 }}</span> -->
@@ -451,7 +451,7 @@
                                                 </template>
                                             </div>
 
-                                            <div class="d-flex" style="width: 60px;">
+                                            <div class="d-flex ml-6" style="width: 60px;">
                                                 <template v-if="contact.fields.cny_hkd_1">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_hkd_1 }}</span> -->
@@ -544,7 +544,7 @@
                                                 </template>
                                             </div>
 
-                                            <div class="d-flex" style="width: 60px;">
+                                            <div class="d-flex ml-6" style="width: 60px;">
                                                 <template v-if="contact.fields.cny_hkd_2">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_hkd_2 }}</span> -->
@@ -641,7 +641,7 @@
                                                 </template>
                                             </div>
 
-                                            <div class="d-flex" style="width: 60px;">
+                                            <div class="d-flex ml-6" style="width: 60px;">
                                                 <template v-if="contact.fields.cny_hkd_3">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_hkd_3 }}</span> -->
@@ -736,7 +736,7 @@
                                                 </template>
                                             </div>
 
-                                            <div class="d-flex" style="width: 60px;">
+                                            <div class="d-flex ml-6" style="width: 60px;">
                                                 <template v-if="contact.fields.cny_oth_1">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_oth_1 }}</span> -->
@@ -829,7 +829,7 @@
                                                 </template>
                                             </div>
 
-                                            <div class="d-flex" style="width: 60px;">
+                                            <div class="d-flex ml-6" style="width: 60px;">
                                                 <template v-if="contact.fields.cny_oth_2">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_oth_2 }}</span> -->
@@ -926,7 +926,7 @@
                                                 </template>
                                             </div>
 
-                                            <div class="d-flex" style="width: 60px;">
+                                            <div class="d-flex ml-6" style="width: 60px;">
                                                 <template v-if="contact.fields.cny_oth_3">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_oth_3 }}</span> -->
