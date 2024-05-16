@@ -95,12 +95,12 @@
             </div>
 
 
-
-
-
-
-
-
+            <div class="mb-2">
+              <div class="form-control date-picker-container">
+                <!-- <DatePicker v-model="contact.date" /> -->
+                <DatePicker v-model="selectedDate" />
+              </div>
+            </div>
 
 
 
