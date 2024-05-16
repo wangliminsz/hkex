@@ -110,7 +110,7 @@
             <div v-if="selectedCurrency === 'usd'">
 
               USD <div class="mb-2">
-                <input v-model="contact.usd" type="number" step="0.0001" class="form-control"
+                <input v-model="contact.usd" type="number" step="0.0001" class="form-control text-sm"
                   :disabled="selectedCurrency !== 'usd'" placeholder="Input USD Amount..." :class="{
                     'is-invalid': contact.usd && !isValidUSD,
                   }" />
@@ -124,7 +124,7 @@
               <div class="d-flex  justify-content-between align-items-center">
 
                 <div class="mb-2"> <!-- me-3 provides margin to the right -->
-                  <input v-model="contact.usd_rate_1" type="number" step="0.0001" class="form-control"
+                  <input v-model="contact.usd_rate_1" type="number" step="0.0001" class="form-control text-sm"
                     :disabled="selectedCurrency !== 'usd'" :class="{
                       'is-invalid': contact.usd_rate_1 && !isValidUSD_rate1,
                     }" />
@@ -185,7 +185,7 @@
               <div class="d-flex  justify-content-between align-items-center">
 
                 <div class="mb-2">
-                  <input v-model="contact.usd_rate_2" type="number" step="0.0001" class="form-control"
+                  <input v-model="contact.usd_rate_2" type="number" step="0.0001" class="form-control text-sm"
                     :disabled="selectedCurrency !== 'usd'" :class="{
                       'is-invalid': contact.usd_rate_2 && !isValidUSD_rate2,
                     }" />
@@ -245,7 +245,7 @@
 
 
                 <div class="mb-2">
-                  <input v-model="contact.usd_rate_3" type="number" step="0.0001" class="form-control"
+                  <input v-model="contact.usd_rate_3" type="number" step="0.0001" class="form-control text-sm"
                     :disabled="selectedCurrency !== 'usd'" :class="{
                       'is-invalid': contact.usd_rate_3 && !isValidUSD_rate3,
                     }" />
@@ -286,7 +286,7 @@
             <div v-if="selectedCurrency === 'hkd'">
 
               HKD <div class="mb-2">
-                <input v-model="contact.hkd" type="number" step="0.0001" class="form-control"
+                <input v-model="contact.hkd" type="number" step="0.0001" class="form-control text-sm"
                   :disabled="selectedCurrency !== 'hkd'" placeholder="Input HKD Amount..." :class="{
                     'is-invalid': contact.hkd && !isValidHKD,
                   }" />
@@ -300,7 +300,7 @@
               <div class="d-flex  justify-content-between align-items-center">
 
                 <div class="mb-2"> <!-- me-3 provides margin to the right -->
-                  <input v-model="contact.hkd_rate_1" type="number" step="0.0001" class="form-control"
+                  <input v-model="contact.hkd_rate_1" type="number" step="0.0001" class="form-control text-sm"
                     :disabled="selectedCurrency !== 'hkd'" :class="{
                       'is-invalid': contact.hkd_rate_1 && !isValidHKD_rate1,
                     }" />
@@ -361,7 +361,7 @@
               <div class="d-flex  justify-content-between align-items-center">
 
                 <div class="mb-2">
-                  <input v-model="contact.hkd_rate_2" type="number" step="0.0001" class="form-control"
+                  <input v-model="contact.hkd_rate_2" type="number" step="0.0001" class="form-control text-sm"
                     :disabled="selectedCurrency !== 'hkd'" :class="{
                       'is-invalid': contact.hkd_rate_2 && !isValidHKD_rate2,
                     }" />
@@ -421,7 +421,7 @@
 
 
                 <div class="mb-2">
-                  <input v-model="contact.hkd_rate_3" type="number" step="0.0001" class="form-control"
+                  <input v-model="contact.hkd_rate_3" type="number" step="0.0001" class="form-control text-sm"
                     :disabled="selectedCurrency !== 'hkd'" :class="{
                       'is-invalid': contact.hkd_rate_3 && !isValidHKD_rate3,
                     }" />
@@ -465,7 +465,7 @@
               <span v-if="contact.oth_name">{{ contact.oth_name }}</span><span v-else>Others</span>
 
               <div class="mb-2">
-                <input v-model="contact.oth" type="number" step="0.0001" class="form-control"
+                <input v-model="contact.oth" type="number" step="0.0001" class="form-control text-sm"
                   :disabled="selectedCurrency !== 'oth'" placeholder="Input Amount..." :class="{
                     'is-invalid': contact.oth && !isValidOTH,
                   }" />
@@ -479,7 +479,7 @@
               <div class="d-flex  justify-content-between align-items-center">
 
                 <div class="mb-2"> <!-- me-3 provides margin to the right -->
-                  <input v-model="contact.oth_rate_1" type="number" step="0.0001" class="form-control"
+                  <input v-model="contact.oth_rate_1" type="number" step="0.0001" class="form-control text-sm"
                     :disabled="selectedCurrency !== 'oth'" :class="{
                       'is-invalid': contact.oth_rate_1 && !isValidOTH_rate1,
                     }" />
@@ -540,7 +540,7 @@
               <div class="d-flex  justify-content-between align-items-center">
 
                 <div class="mb-2">
-                  <input v-model="contact.oth_rate_2" type="number" step="0.0001" class="form-control"
+                  <input v-model="contact.oth_rate_2" type="number" step="0.0001" class="form-control text-sm"
                     :disabled="selectedCurrency !== 'oth'" :class="{
                       'is-invalid': contact.oth_rate_2 && !isValidOTH_rate2,
                     }" />
@@ -600,7 +600,7 @@
 
 
                 <div class="mb-2">
-                  <input v-model="contact.oth_rate_3" type="number" step="0.0001" class="form-control"
+                  <input v-model="contact.oth_rate_3" type="number" step="0.0001" class="form-control text-sm"
                     :disabled="selectedCurrency !== 'oth'" :class="{
                       'is-invalid': contact.oth_rate_3 && !isValidOTH_rate3,
                     }" />
