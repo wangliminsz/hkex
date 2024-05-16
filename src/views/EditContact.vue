@@ -650,7 +650,7 @@
             <!-- <div class="d-flex flex-wrap mt-3"> -->
             <div class="mt-3 d-flex justify-content-end button-group">
               <div>
-                <input type="submit" class="btn btn-success" value="Update" :disabled="!isFormValid" />
+                <input type="submit" class="btn btn-success mr-5" value="Update" :disabled="!isFormValid" />
                 <!-- </div>
               <div> -->
                 <router-link to="/contacts" class="btn btn-success">Cancel</router-link>
@@ -1091,22 +1091,7 @@ export default {
 <style scoped>
 .button-group {
   justify-content: flex-end;
-
-  /* Ensures the buttons are aligned to the end */
-  /* You can remove the default margin from the buttons by adding this */
-  >div {
-    margin-left: 1rem;
-    /* Adjust the negative margin to bring the buttons closer */
-  }
-
-  .btn {
-    margin-left: 1rem;
-    /* This will add space between buttons, counteracting the negative margin */
-  }
 }
-
-
-
 
 .d-flex {
   justify-content: space-start;
