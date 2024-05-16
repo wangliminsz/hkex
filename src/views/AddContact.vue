@@ -648,12 +648,12 @@
 
 
             <!-- <div class="d-flex flex-wrap mt-3"> -->
-            <div class="mt-3 d-flex justify-content-start">
+            <div class="mt-3 d-flex justify-content-end">
               <div>
-                <input type="submit" class="btn btn-success ml-5" value="Create" :disabled="!isFormValid" />
+                <input type="submit" class="btn btn-success" value="Create" :disabled="!isFormValid" />
               </div>
               <div>
-                <router-link to="/contacts" class="btn btn-success ml-5">Cancel</router-link>
+                <router-link to="/contacts" class="btn btn-success">Cancel</router-link>
               </div>
             </div>
 
