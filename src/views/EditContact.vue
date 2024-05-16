@@ -651,8 +651,8 @@
             <div class="mt-3 d-flex justify-content-start">
               <div>
                 <input type="submit" class="btn btn-success ml-5" value="Update" :disabled="!isFormValid" />
-                <!-- </div>
-              <div> -->
+                </div>
+              <div>
                 <router-link to="/contacts" class="btn btn-success ml-5">Cancel</router-link>
               </div>
             </div>
