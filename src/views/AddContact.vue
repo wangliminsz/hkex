@@ -852,8 +852,9 @@ export default {
         return (
           (this.isValidUSD || this.isValidHKD || this.isValidOTH) );
       }
+      
     }
-    
+
   },
 
   methods: {

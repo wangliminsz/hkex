@@ -891,20 +891,16 @@ export default {
     },
 
     isFormValid() {
-      return (
-        (this.isValidUSD || this.isValidHKD || this.isValidOTH) &&
-        this.isValidOTH_name
-        // this.isValidDesc &&
-        // this.isValidUSD_rate1 &&
-        // this.isValidUSD_rate2 &&
-        // this.isValidUSD_rate3 &&
-        // this.isValidHKD_rate1 &&
-        // this.isValidHKD_rate2 &&
-        // this.isValidHKD_rate3
-        // this.isValidRentStart &&
-        // this.isValidRentEnd
-        // this.isValidGroup
-      );
+
+      if (this.selectedCurrency === 'oth') {
+        return (
+          (this.isValidUSD || this.isValidHKD || this.isValidOTH) &&
+          this.isValidOTH_name);
+      }else{
+        return (
+          (this.isValidUSD || this.isValidHKD || this.isValidOTH) );
+      }
+
     },
   },
 
