@@ -173,6 +173,9 @@ export class ContactService {
 
   // by chatGPT
   static async airUpdateRecord(recordObj, contactId) {
+    
+    // console.log('js oth_cny_1 --->>>', recordObj)
+
     return new Promise((resolve, reject) => {
       // configure the Airtable base and API key
       airtable.configure({
@@ -213,8 +216,17 @@ export class ContactService {
           delete recordObj.cny_hkd_2;
           delete recordObj.cny_hkd_3;
 
+          delete recordObj.cny_oth_1;
+          delete recordObj.cny_oth_2;
+          delete recordObj.cny_oth_3;
+
           recordObj.channel = String(recordObj.channel)
+          recordObj.channel_2 = String(recordObj.channel_2)
+          recordObj.channel_3 = String(recordObj.channel_3)
+
           recordObj.upstream = String(recordObj.upstream)
+          recordObj.upstream_2 = String(recordObj.upstream_2)
+          recordObj.upstream_3 = String(recordObj.upstream_3)
 
           // console.log('channel', recordObj.channel, typeof(recordObj.channel))
 

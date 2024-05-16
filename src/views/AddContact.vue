@@ -2,18 +2,35 @@
   <div>
     <div class="container mt-3">
       <div class="row">
-        <div class="col-md-4">
+
+
+
+        <div class="col-md-6">
 
           <div class="d-flex justify-content-start">
 
-            <div>
+            <div style="flex: 0.3;">
               <p class="h3 text-success fw-bold">Add</p>
             </div>
 
 
-            <div class="d-flex align-items-baseline">
-              <span class="mr-2">USD <input type="radio" name="currency" value="usd" v-model="selectedCurrency"></span>
-              <span>HKD <input type="radio" name="currency" value="hkd" v-model="selectedCurrency"> </span>
+            <div style="flex: 0.5;" class="d-flex align-items-baseline">
+              <span class="mr-3">USD <input type="radio" name="currency" value="usd" v-model="selectedCurrency"></span>
+              <span class="mr-3">HKD <input type="radio" name="currency" value="hkd" v-model="selectedCurrency"> </span>
+              <span>Others <input type="radio" name="currency" value="oth" v-model="selectedCurrency"> </span>
+
+            </div>
+
+            <div style="flex: 0.2;">
+              <select v-model="contact.oth_name" class="form-control" :disabled="selectedCurrency !== 'oth'">
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <option value="CAN">CAN</option>
+                <option value="JPY">JPY</option>
+                <option value="SGD">SGD</option>
+                <option value="NTD">NTD</option>
+                <option value="THB">THB</option>
+              </select>
             </div>
 
 
@@ -22,6 +39,9 @@
 
 
         </div>
+
+
+
       </div>
     </div>
 
@@ -51,7 +71,7 @@
 
     <div class="container mt-3" v-if="!loading">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <form @submit.prevent="myCreate">
 
             <!-- {{ upstreams.records.length }}
@@ -59,16 +79,16 @@
 
             <div class="d-flex justify-content-between align-items-center">
 
-              <div class="mb-2 mr-5">
+              <div class="mb-2 mr-2" style="flex: 0.3;">
                 <select v-model="contact.status" class="form-control">
                   <option value="進行中">進行中</option>
                   <option value="已完成">已完成</option>
                 </select>
               </div>
 
-              <div class="mb-2 col-md-12">
-                <input v-model="contact.desc" type="text" class="form-control" style="width: 250px;"
-                  placeholder="Input Name/Desc ..." :class="{ 'is-invalid': contact.desc && !isValidDesc }" />
+              <div class="mb-2" style="flex: 0.7;">
+                <input v-model="contact.desc" type="text" class="form-control" placeholder="Input Name/Desc ..."
+                  :class="{ 'is-invalid': contact.desc && !isValidDesc }" />
                 <div v-if="contact.desc && !isValidDesc" class="invalid-feedback">
                   Please enter a valid Description.
                 </div>
@@ -83,13 +103,15 @@
               </div>
             </div>
 
+
+
             <!-- usd usd usd -->
 
-            <div>
+            <div v-if="selectedCurrency === 'usd'">
 
-              <div class="mb-2">
+              USD <div class="mb-2">
                 <input v-model="contact.usd" type="number" step="0.0001" class="form-control"
-                  :disabled="selectedCurrency === 'hkd'" placeholder="Input USD Amount..." :class="{
+                  :disabled="selectedCurrency !== 'usd'" placeholder="Input USD Amount..." :class="{
                     'is-invalid': contact.usd && !isValidUSD,
                   }" />
                 <div v-if="contact.usd && !isValidUSD" class="invalid-feedback">
@@ -100,9 +122,10 @@
               <!-- usd rate 1 -->
 
               <div class="d-flex  justify-content-between align-items-center">
-                <div class="mb-2 me-3"> <!-- me-3 provides margin to the right -->
+
+                <div class="mb-2"> <!-- me-3 provides margin to the right -->
                   <input v-model="contact.usd_rate_1" type="number" step="0.0001" class="form-control"
-                    :disabled="selectedCurrency === 'hkd'" :class="{
+                    :disabled="selectedCurrency !== 'usd'" :class="{
                       'is-invalid': contact.usd_rate_1 && !isValidUSD_rate1,
                     }" />
                   <div v-if="contact.usd_rate_1 && !isValidUSD_rate1" class="invalid-feedback">
@@ -110,14 +133,44 @@
                   </div>
                 </div>
 
-                <div class="mb-2 col-md-12">
-                  <select v-model="contact.upstream" class="form-control" :disabled="selectedCurrency === 'hkd'" style="width: 250px;" id="supplierSelect"
-                    v-if="upstreams.records.length > 0">
-                    <option class="text-danger" value="" selected>Layer 1</option>
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.usd * contact.usd_rate_1).toFixed(2) }}
+                </div>
+
+
+
+                <div class="mb-2">
+                  <select v-model="contact.upstream" class="form-control" :disabled="selectedCurrency !== 'usd'"
+                    id="supplierSelect" v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
                     <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
                       {{ upstream.fields.name }}
                     </option>
                   </select>
+                </div>
+
+                <div class="mb-2">
+                  <select v-model="contact.upstream_2" class="form-control" :disabled="selectedCurrency !== 'usd'"
+                    id="supplierSelect" v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
+                      {{ upstream.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2">
+                  <select v-model="contact.upstream_3" class="form-control" :disabled="selectedCurrency !== 'usd'"
+                    id="supplierSelect" v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
+                      {{ upstream.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.usd * (contact.usd_rate_2 - contact.usd_rate_1)).toFixed(2) }}
                 </div>
 
 
@@ -127,12 +180,13 @@
 
               <!-- usd rate 2 -->
 
+
+
               <div class="d-flex  justify-content-between align-items-center">
 
-
-                <div class="mb-2 me-3">
+                <div class="mb-2">
                   <input v-model="contact.usd_rate_2" type="number" step="0.0001" class="form-control"
-                    :disabled="selectedCurrency === 'hkd'" :class="{
+                    :disabled="selectedCurrency !== 'usd'" :class="{
                       'is-invalid': contact.usd_rate_2 && !isValidUSD_rate2,
                     }" />
                   <div v-if="contact.usd_rate_2 && !isValidUSD_rate2" class="invalid-feedback">
@@ -140,17 +194,49 @@
                   </div>
                 </div>
 
-                <div class="mb-2 col-md-12">
-                  <select v-model="contact.channel" class="form-control" :disabled="selectedCurrency === 'hkd'" style="width: 250px;" id="supplierSelect"
-                    v-if="channels.records.length > 0">
-                    <option class="text-danger" value="" selected>Layer 2</option>
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.usd * contact.usd_rate_2).toFixed(2) }}
+                </div>
+
+
+
+                <div class="mb-2">
+                  <select v-model="contact.channel" class="form-control" :disabled="selectedCurrency !== 'usd'"
+                    id="supplierSelect" v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
                     <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
                       {{ channel.fields.name }}
                     </option>
                   </select>
                 </div>
 
+                <div class="mb-2">
+                  <select v-model="contact.channel_2" class="form-control" :disabled="selectedCurrency !== 'usd'"
+                    id="supplierSelect" v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
+                      {{ channel.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2">
+                  <select v-model="contact.channel_3" class="form-control" :disabled="selectedCurrency !== 'usd'"
+                    id="supplierSelect" v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
+                      {{ channel.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.usd * (contact.usd_rate_3 - contact.usd_rate_2)).toFixed(2) }}
+                </div>
+
               </div>
+
+
 
 
               <!-- usd rate 3 -->
@@ -158,15 +244,32 @@
               <div class="d-flex  justify-content-between align-items-center">
 
 
-                <div class="mb-2 me-3">
+                <div class="mb-2">
                   <input v-model="contact.usd_rate_3" type="number" step="0.0001" class="form-control"
-                    :disabled="selectedCurrency === 'hkd'" :class="{
+                    :disabled="selectedCurrency !== 'usd'" :class="{
                       'is-invalid': contact.usd_rate_3 && !isValidUSD_rate3,
                     }" />
                   <div v-if="contact.usd_rate_3 && !isValidUSD_rate3" class="invalid-feedback">
                     Please enter a valid USD rate.
                   </div>
                 </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.usd * contact.usd_rate_3).toFixed(2) }}
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
 
 
               </div>
@@ -176,41 +279,74 @@
             <!-- usd usd usd -->
 
 
+
+
             <!-- hkd hkd hkd -->
 
-            <div>
+            <div v-if="selectedCurrency === 'hkd'">
 
-              <div class="mb-2">
+              HKD <div class="mb-2">
                 <input v-model="contact.hkd" type="number" step="0.0001" class="form-control"
-                  :disabled="selectedCurrency === 'usd'" placeholder="Input HKD Amount ..." :class="{
+                  :disabled="selectedCurrency !== 'hkd'" placeholder="Input HKD Amount..." :class="{
                     'is-invalid': contact.hkd && !isValidHKD,
                   }" />
                 <div v-if="contact.hkd && !isValidHKD" class="invalid-feedback">
-                  Please enter a valid hkd amount.
+                  Please enter a valid HKD amount.
                 </div>
               </div>
 
               <!-- hkd rate 1 -->
 
               <div class="d-flex  justify-content-between align-items-center">
-                <div class="mb-2 me-3"> <!-- me-3 provides margin to the right -->
+
+                <div class="mb-2"> <!-- me-3 provides margin to the right -->
                   <input v-model="contact.hkd_rate_1" type="number" step="0.0001" class="form-control"
-                    :disabled="selectedCurrency === 'usd'" :class="{
+                    :disabled="selectedCurrency !== 'hkd'" :class="{
                       'is-invalid': contact.hkd_rate_1 && !isValidHKD_rate1,
                     }" />
                   <div v-if="contact.hkd_rate_1 && !isValidHKD_rate1" class="invalid-feedback">
-                    Please enter a valid hkd rate.
+                    Please enter a valid HKD rate.
                   </div>
                 </div>
 
-                <div class="mb-2 col-md-12">
-                  <select v-model="contact.upstream" class="form-control" :disabled="selectedCurrency === 'usd'" style="width: 250px;" id="supplierSelect"
-                    v-if="upstreams.records.length > 0">
-                    <option class="text-danger" value="" selected>Layer 1</option>
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.hkd * contact.hkd_rate_1).toFixed(2) }}
+                </div>
+
+
+
+                <div class="mb-2">
+                  <select v-model="contact.upstream" class="form-control" :disabled="selectedCurrency !== 'hkd'"
+                    id="supplierSelect" v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
                     <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
                       {{ upstream.fields.name }}
                     </option>
                   </select>
+                </div>
+
+                <div class="mb-2">
+                  <select v-model="contact.upstream_2" class="form-control" :disabled="selectedCurrency !== 'hkd'"
+                    id="supplierSelect" v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
+                      {{ upstream.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2">
+                  <select v-model="contact.upstream_3" class="form-control" :disabled="selectedCurrency !== 'hkd'"
+                    id="supplierSelect" v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
+                      {{ upstream.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.hkd * (contact.hkd_rate_2 - contact.hkd_rate_1)).toFixed(2) }}
                 </div>
 
 
@@ -220,30 +356,63 @@
 
               <!-- hkd rate 2 -->
 
+
+
               <div class="d-flex  justify-content-between align-items-center">
 
-
-                <div class="mb-2 me-3">
+                <div class="mb-2">
                   <input v-model="contact.hkd_rate_2" type="number" step="0.0001" class="form-control"
-                    :disabled="selectedCurrency === 'usd'" :class="{
+                    :disabled="selectedCurrency !== 'hkd'" :class="{
                       'is-invalid': contact.hkd_rate_2 && !isValidHKD_rate2,
                     }" />
                   <div v-if="contact.hkd_rate_2 && !isValidHKD_rate2" class="invalid-feedback">
-                    Please enter a valid hkd rate.
+                    Please enter a valid HKD rate.
                   </div>
                 </div>
 
-                <div class="mb-2 col-md-12">
-                  <select v-model="contact.channel" class="form-control" :disabled="selectedCurrency === 'usd'" style="width: 250px;" id="supplierSelect"
-                    v-if="channels.records.length > 0">
-                    <option class="text-danger" value="" selected>Layer 2</option>
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.hkd * contact.hkd_rate_2).toFixed(2) }}
+                </div>
+
+
+
+                <div class="mb-2">
+                  <select v-model="contact.channel" class="form-control" :disabled="selectedCurrency !== 'hkd'"
+                    id="supplierSelect" v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
                     <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
                       {{ channel.fields.name }}
                     </option>
                   </select>
                 </div>
 
+                <div class="mb-2">
+                  <select v-model="contact.channel_2" class="form-control" :disabled="selectedCurrency !== 'hkd'"
+                    id="supplierSelect" v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
+                      {{ channel.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2">
+                  <select v-model="contact.channel_3" class="form-control" :disabled="selectedCurrency !== 'hkd'"
+                    id="supplierSelect" v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
+                      {{ channel.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.hkd * (contact.hkd_rate_3 - contact.hkd_rate_2)).toFixed(2) }}
+                </div>
+
               </div>
+
+
 
 
               <!-- hkd rate 3 -->
@@ -251,23 +420,219 @@
               <div class="d-flex  justify-content-between align-items-center">
 
 
-                <div class="mb-2 me-3">
+                <div class="mb-2">
                   <input v-model="contact.hkd_rate_3" type="number" step="0.0001" class="form-control"
-                    :disabled="selectedCurrency === 'usd'" :class="{
+                    :disabled="selectedCurrency !== 'hkd'" :class="{
                       'is-invalid': contact.hkd_rate_3 && !isValidHKD_rate3,
                     }" />
                   <div v-if="contact.hkd_rate_3 && !isValidHKD_rate3" class="invalid-feedback">
-                    Please enter a valid hkd rate.
+                    Please enter a valid HKD rate.
                   </div>
                 </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.hkd * contact.hkd_rate_3).toFixed(2) }}
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
 
 
               </div>
 
-
             </div>
 
             <!-- hkd hkd hkd -->
+
+
+
+
+
+            <!-- oth oth oth -->
+
+            <div v-if="selectedCurrency === 'oth'">
+
+              <span v-if="contact.oth_name">{{ contact.oth_name }}</span><span v-else>Others</span>
+              
+              <div class="mb-2">
+                <input v-model="contact.oth" type="number" step="0.0001" class="form-control"
+                  :disabled="selectedCurrency !== 'oth'" placeholder="Input Amount..." :class="{
+                    'is-invalid': contact.oth && !isValidOTH,
+                  }" />
+                <div v-if="contact.oth && !isValidOTH" class="invalid-feedback">
+                  Please enter a valid amount.
+                </div>
+              </div>
+
+              <!-- oth rate 1 -->
+
+              <div class="d-flex  justify-content-between align-items-center">
+
+                <div class="mb-2"> <!-- me-3 provides margin to the right -->
+                  <input v-model="contact.oth_rate_1" type="number" step="0.0001" class="form-control"
+                    :disabled="selectedCurrency !== 'oth'" :class="{
+                      'is-invalid': contact.oth_rate_1 && !isValidOTH_rate1,
+                    }" />
+                  <div v-if="contact.oth_rate_1 && !isValidOTH_rate1" class="invalid-feedback">
+                    Please enter a valid rate.
+                  </div>
+                </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.oth * contact.oth_rate_1).toFixed(2) }}
+                </div>
+
+
+
+                <div class="mb-2">
+                  <select v-model="contact.upstream" class="form-control" :disabled="selectedCurrency !== 'oth'"
+                    id="supplierSelect" v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
+                      {{ upstream.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2">
+                  <select v-model="contact.upstream_2" class="form-control" :disabled="selectedCurrency !== 'oth'"
+                    id="supplierSelect" v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
+                      {{ upstream.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2">
+                  <select v-model="contact.upstream_3" class="form-control" :disabled="selectedCurrency !== 'oth'"
+                    id="supplierSelect" v-if="upstreams.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="upstream in upstreams.records" :key="upstream.fields.id" :value="upstream.fields.id">
+                      {{ upstream.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.oth * (contact.oth_rate_2 - contact.oth_rate_1)).toFixed(2) }}
+                </div>
+
+
+
+
+              </div>
+
+              <!-- oth rate 2 -->
+
+
+
+              <div class="d-flex  justify-content-between align-items-center">
+
+                <div class="mb-2">
+                  <input v-model="contact.oth_rate_2" type="number" step="0.0001" class="form-control"
+                    :disabled="selectedCurrency !== 'oth'" :class="{
+                      'is-invalid': contact.oth_rate_2 && !isValidOTH_rate2,
+                    }" />
+                  <div v-if="contact.oth_rate_2 && !isValidOTH_rate2" class="invalid-feedback">
+                    Please enter a valid rate.
+                  </div>
+                </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.oth * contact.oth_rate_2).toFixed(2) }}
+                </div>
+
+
+
+                <div class="mb-2">
+                  <select v-model="contact.channel" class="form-control" :disabled="selectedCurrency !== 'oth'"
+                    id="supplierSelect" v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
+                      {{ channel.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2">
+                  <select v-model="contact.channel_2" class="form-control" :disabled="selectedCurrency !== 'oth'"
+                    id="supplierSelect" v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
+                      {{ channel.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2">
+                  <select v-model="contact.channel_3" class="form-control" :disabled="selectedCurrency !== 'oth'"
+                    id="supplierSelect" v-if="channels.records.length > 0">
+                    <option class="text-danger" value="" selected>&nbsp;</option>
+                    <option v-for="channel in channels.records" :key="channel.fields.id" :value="channel.fields.id">
+                      {{ channel.fields.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.oth * (contact.oth_rate_3 - contact.oth_rate_2)).toFixed(2) }}
+                </div>
+
+              </div>
+
+
+
+
+              <!-- oth rate 3 -->
+
+              <div class="d-flex  justify-content-between align-items-center">
+
+
+                <div class="mb-2">
+                  <input v-model="contact.oth_rate_3" type="number" step="0.0001" class="form-control"
+                    :disabled="selectedCurrency !== 'oth'" :class="{
+                      'is-invalid': contact.oth_rate_3 && !isValidOTH_rate3,
+                    }" />
+                  <div v-if="contact.oth_rate_3 && !isValidOTH_rate3" class="invalid-feedback">
+                    Please enter a valid rate.
+                  </div>
+                </div>
+
+                <div class="mb-2 ml-3 text-sm">
+                  {{ (contact.oth * contact.oth_rate_3).toFixed(2) }}
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
+
+
+              </div>
+
+            </div>
+
+            <!-- oth oth oth -->
+
 
 
 
@@ -282,11 +647,12 @@
 
 
 
-            <div class="d-flex flex-wrap mt-3">
-              <div class="col-md-3">
+            <!-- <div class="d-flex flex-wrap mt-3"> -->
+            <div class="mt-3 d-flex justify-content-end button-group">
+              <div>
                 <input type="submit" class="btn btn-success" value="Create" :disabled="!isFormValid" />
-              </div>
-              <div class="col-md-3">
+                <!-- </div>
+              <div> -->
                 <router-link to="/contacts" class="btn btn-success">Cancel</router-link>
               </div>
             </div>
@@ -304,9 +670,11 @@
   </div>
 </template>
 
+
 <script>
 import { ContactService } from "@/services/ContactService";
 import { supabase } from "@/clients/supabase";
+
 import mySpinner from "@/components/Spinner.vue";
 
 import DatePicker from 'vue3-datepicker'
@@ -335,16 +703,25 @@ export default {
         update_user_id: "",
         status: "進行中",
         upstream: '',
+        upstream_2: '',
+        upstream_3: '',
         channel: '',
+        channel_2: '',
+        channel_3: '',
         date: '',
         usd: '',
         hkd: '',
+        oth: '',
+        oth_name: '',
         usd_rate_1: 7.31,
         usd_rate_2: 7.42,
         usd_rate_3: 7.53,
         hkd_rate_1: 0.931,
         hkd_rate_2: 0.942,
         hkd_rate_3: 0.953,
+        oth_rate_1: 5.001,
+        oth_rate_2: 6.002,
+        oth_rate_3: 7.003,
         user_email: '',
       },
 
@@ -386,6 +763,33 @@ export default {
 
     isValidDesc() {
       return Boolean(this.contact.desc);
+    },
+
+    isValidOTH() {
+      if (this.contact.oth == '') {
+        return false;
+      }
+      const othNumber = Number(this.contact.oth);
+      return !isNaN(othNumber);
+    },
+
+    isValidOTH_rate1() {
+      const othRate1 = Number(this.contact.oth_rate_1);
+      return !isNaN(othRate1);
+    },
+
+    isValidOTH_name() {
+      return Boolean(this.contact.oth_name);
+    },
+
+    isValidOTH_rate2() {
+      const othRate2 = Number(this.contact.oth_rate_2);
+      return !isNaN(othRate2);
+    },
+
+    isValidOTH_rate3() {
+      const othRate3 = Number(this.contact.oth_rate_3);
+      return !isNaN(othRate3);
     },
 
     isValidUSD() {
@@ -440,7 +844,8 @@ export default {
 
     isFormValid() {
       return (
-        (this.isValidUSD || this.isValidHKD)
+        (this.isValidUSD || this.isValidHKD || this.isValidOTH) &&
+        this.isValidOTH_name
         // this.isValidDesc &&
         // this.isValidUSD_rate1 &&
         // this.isValidUSD_rate2 &&
@@ -467,20 +872,31 @@ export default {
           this.contact.create_user_id = this.currentUserId;
           this.contact.update_date = new Date().toISOString();
           this.contact.upstream = String(this.contact.upstream);
+          this.contact.upstream_2 = String(this.contact.upstream_2);
+          this.contact.upstream_3 = String(this.contact.upstream_3);
           this.contact.channel = String(this.contact.channel);
+          this.contact.channel_2 = String(this.contact.channel_2);
+          this.contact.channel_3 = String(this.contact.channel_3);
           let dateWithCorrectTimeZone = new Date(Date.UTC(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate()));
           this.contact.date = dateWithCorrectTimeZone.toISOString().slice(0, 10);
 
           if (this.contact.usd === '' || this.contact.usd == 0) {
-            this.contact.usd_rate_1 = ''
-            this.contact.usd_rate_2 = ''
-            this.contact.usd_rate_3 = ''
+            this.contact.usd_rate_1 = 0
+            this.contact.usd_rate_2 = 0
+            this.contact.usd_rate_3 = 0
           }
 
           if (this.contact.hkd === '' || this.contact.hkd == 0) {
-            this.contact.hkd_rate_1 = ''
-            this.contact.hkd_rate_2 = ''
-            this.contact.hkd_rate_3 = ''
+            this.contact.hkd_rate_1 = 0
+            this.contact.hkd_rate_2 = 0
+            this.contact.hkd_rate_3 = 0
+          }
+
+          if (this.contact.oth === '' || this.contact.oth == 0) {
+            this.contact.oth_rate_1 = 0
+            this.contact.oth_rate_2 = 0
+            this.contact.oth_rate_3 = 0
+            this.contact.oth_name = ''
           }
 
           let response = await ContactService.airInsertRecord(this.contact);
@@ -519,10 +935,93 @@ export default {
       }
     },
   },
+
+  watch: {
+    'selectedCurrency': function (newVal) {
+      if (newVal) {
+        if (newVal === 'hkd' || newVal === 'usd') {
+          this.contact.oth_name = ''
+        }
+
+        if (newVal === 'usd') {
+          // this.contact.usd = ''
+          // this.contact.usd_rate_1 = ''
+          // this.contact.usd_rate_2 = ''
+          // this.contact.usd_rate_3 = ''
+
+          this.contact.hkd = ''
+          this.contact.hkd_rate_1 = ''
+          this.contact.hkd_rate_2 = ''
+          this.contact.hkd_rate_3 = ''
+
+          this.contact.oth = ''
+          this.contact.oth_rate_1 = ''
+          this.contact.oth_rate_2 = ''
+          this.contact.oth_rate_3 = ''
+        }
+        
+        if (newVal === 'hkd') {
+          this.contact.usd = ''
+          this.contact.usd_rate_1 = ''
+          this.contact.usd_rate_2 = ''
+          this.contact.usd_rate_3 = ''
+
+          // this.contact.hkd = ''
+          // this.contact.hkd_rate_1 = ''
+          // this.contact.hkd_rate_2 = ''
+          // this.contact.hkd_rate_3 = ''
+
+          this.contact.oth = ''
+          this.contact.oth_rate_1 = ''
+          this.contact.oth_rate_2 = ''
+          this.contact.oth_rate_3 = ''
+        }
+
+        if (newVal === 'oth') {
+          this.contact.usd = ''
+          this.contact.usd_rate_1 = ''
+          this.contact.usd_rate_2 = ''
+          this.contact.usd_rate_3 = ''
+
+          this.contact.hkd = ''
+          this.contact.hkd_rate_1 = ''
+          this.contact.hkd_rate_2 = ''
+          this.contact.hkd_rate_3 = ''
+
+          // this.contact.oth = ''
+          // this.contact.oth_rate_1 = ''
+          // this.contact.oth_rate_2 = ''
+          // this.contact.oth_rate_3 = ''
+        }
+
+
+      }
+    }
+  }
+
 };
 </script>
 
 <style scoped>
+.button-group {
+  justify-content: flex-end;
+
+  /* Ensures the buttons are aligned to the end */
+  /* You can remove the default margin from the buttons by adding this */
+  >div {
+    margin-left: 1rem;
+    /* Adjust the negative margin to bring the buttons closer */
+  }
+
+  .btn {
+    margin-left: 1rem;
+    /* This will add space between buttons, counteracting the negative margin */
+  }
+}
+
+
+
+
 .d-flex {
   justify-content: space-start;
 }

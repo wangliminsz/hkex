@@ -1,5 +1,6 @@
 zz*.http
 .env
+*.py
 
 # Logs
 logs
