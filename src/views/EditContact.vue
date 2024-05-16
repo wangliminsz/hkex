@@ -123,7 +123,7 @@
 
               <div class="d-flex  justify-content-between align-items-center">
 
-                <div class="mb-2"> <!-- me-3 provides margin to the right -->
+                <div class="mb-2 text-sm"> <!-- me-3 provides margin to the right -->
                   <input v-model="contact.usd_rate_1" type="number" step="0.0001" class="form-control text-sm"
                     :disabled="selectedCurrency !== 'usd'" :class="{
                       'is-invalid': contact.usd_rate_1 && !isValidUSD_rate1,
@@ -1092,6 +1092,13 @@ export default {
 </script>
 
 <style scoped>
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .button-group {
   justify-content: flex-end;
 }
