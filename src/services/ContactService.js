@@ -204,29 +204,36 @@ export class ContactService {
 
           delete recordObj.id;
           // delete recordObj.created_at;
-          delete recordObj.cny_1;
-          delete recordObj.cny_2;
-          delete recordObj.cny_3;
+
+          // delete recordObj.cny_1;
+          // delete recordObj.cny_2;
+          // delete recordObj.cny_3;
 
           delete recordObj.cny_usd_1;
           delete recordObj.cny_usd_2;
           delete recordObj.cny_usd_3;
+          delete recordObj.cny_usd_4;
+          delete recordObj.cny_usd_5;
+          delete recordObj.cny_usd_6;
 
-          delete recordObj.cny_hkd_1;
-          delete recordObj.cny_hkd_2;
-          delete recordObj.cny_hkd_3;
+          // delete recordObj.cny_hkd_1;
+          // delete recordObj.cny_hkd_2;
+          // delete recordObj.cny_hkd_3;
 
-          delete recordObj.cny_oth_1;
-          delete recordObj.cny_oth_2;
-          delete recordObj.cny_oth_3;
+          // delete recordObj.cny_oth_1;
+          // delete recordObj.cny_oth_2;
+          // delete recordObj.cny_oth_3;
 
-          recordObj.channel = String(recordObj.channel)
+          recordObj.channel_1 = String(recordObj.channel_1)
           recordObj.channel_2 = String(recordObj.channel_2)
           recordObj.channel_3 = String(recordObj.channel_3)
+          recordObj.channel_4 = String(recordObj.channel_4)
+          recordObj.channel_5 = String(recordObj.channel_5)
+          recordObj.channel_6 = String(recordObj.channel_6)
 
-          recordObj.upstream = String(recordObj.upstream)
-          recordObj.upstream_2 = String(recordObj.upstream_2)
-          recordObj.upstream_3 = String(recordObj.upstream_3)
+          // recordObj.upstream = String(recordObj.upstream)
+          // recordObj.upstream_2 = String(recordObj.upstream_2)
+          // recordObj.upstream_3 = String(recordObj.upstream_3)
 
           // console.log('channel', recordObj.channel, typeof(recordObj.channel))
 

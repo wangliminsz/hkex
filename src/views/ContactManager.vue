@@ -13,24 +13,49 @@
                         Welcome {{ whichUser }}
                     </p>
 
-                    <form @submit.prevent="mySearch">
-                        <div class="row">
 
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="text" class="form-control" placeholder="Search..."
-                                            v-model="searchName">
-                                    </div>
-                                    <div class="col">
-                                        <input type="submit" value="Submit" class="btn btn-outline-dark btn-md"
+
+                    <div class="col-md-4">
+                        <table>
+                            <tr>
+                                <!-- First row, first column -->
+                                <td>
+                                    <input type="text" class="form-control text-sm input-placeholder-gray"
+                                        placeholder="Search..." v-model="searchName">
+                                </td>
+                                <!-- First row, second column -->
+                                <td>
+                                    <div class="ml-2 text-sm">
+                                        <button @click="mySearch('byName')" class="btn btn-outline-dark btn-sm"
                                             :disabled="!isValidSearch">
+                                            Go
+                                        </button>
                                     </div>
-                                </div>
-                            </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <!-- Second row, first column -->
+                                <td>
+                                    <div class="form-control text-sm">
+                                        <DatePicker v-model="selectedDate" placeholder="Your Date..." />
+                                    </div>
+                                </td>
+                                <!-- Second row, second column -->
+                                <td>
+                                    <div class="ml-2 text-sm">
+                                        <button @click="mySearch('byDate')" class="btn btn-outline-dark btn-sm"
+                                            :disabled="!isValidDateSearch">
+                                            Go
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
-                        </div>
-                    </form>
+
+
+
 
                 </div>
             </div>
@@ -61,9 +86,9 @@
         <!-- {{ contacts[1] }} -->
         <!-- {{ ups }} -->
 
-        <div class="container mt-3" v-if="contacts.length > 0 && !loading">
+        <div class="container mt-2" v-if="contacts.length > 0 && !loading">
             <div class="row">
-                <div class="col-md-6" v-for="contact in sortedContacts" :key="contact.fields.id">
+                <div class="col-md-5" v-for="contact in sortedContacts" :key="contact.fields.id">
                     <div class="card my-2 list-group-item-success shadow-lg">
                         <div class="card-body">
 
@@ -78,16 +103,17 @@
                                                 <div class="d-flex flex-column">
                                                     <span class="fw-normal" :style="{
                                                         color: contact.fields.status === '進行中' ? 'red' : 'green',
-                                                        // color: contact.fields.status === '已完成' ? 'green' : null,
-                                                        // textDecoration: contact.fields.status === '已完成' ? 'line-through' : null
                                                     }">
                                                         {{ contact.fields.status }}
-                                                        <span class="ml-2" v-if="contact.fields.usd > 0">USD <span
-                                                                class="ml-1">{{ contact.fields.usd }} </span></span>
-                                                        <span class="ml-2" v-if="contact.fields.hkd > 0">HKD <span
-                                                                class="ml-1">{{ contact.fields.hkd }} </span></span>
-                                                        <span class="ml-2" v-if="contact.fields.oth > 0">{{ contact.fields.oth_name }} <span
-                                                                class="ml-1">{{ contact.fields.oth }} </span></span>        
+                                                        <span class="ml-2">
+                                                            <span v-if="contact.fields.usd_name"> {{
+                                                                contact.fields.usd_name }} </span>
+
+                                                            <span class="ml-1">
+                                                                {{ contact.fields.usd }}
+                                                            </span>
+                                                        </span>
+
                                                     </span>
 
                                                 </div>
@@ -101,7 +127,6 @@
 
                                         <div class="text-sm text-gray-200" v-if="contact.fields.user_email">
                                             {{ userEmail(contact.fields.user_email) }}
-                                            <!-- {{ contact.fields.user_email }} -->
                                         </div>
                                     </div>
 
@@ -147,10 +172,56 @@
 
                                         <!-- usd usd usd usd usd -->
 
-                                        <li v-if="contact.fields.usd > 0" class="list-group-item"><span class="mr-1"
-                                                :style="{ textDecoration: contact.fields.usd > 0 ? null : 'line-through' }">USD</span>
-                                            <span class="fw-normal">{{ contact.fields.usd }}</span>
+
+                                        <li v-if="contact.fields.usd > 0"
+                                            class="list-group-item  d-flex justify-content-between align-items-left">
+
+                                            <div>
+                                                <span class="mr-1"
+                                                    :style="{ textDecoration: contact.fields.usd > 0 ? null : 'line-through' }">{{
+                                                        contact.fields.usd_name
+                                                    }}
+                                                </span>
+                                                <span class="fw-normal">
+                                                    {{ contact.fields.usd }}
+                                                </span>
+                                            </div>
+
+                                            <!-- <div class="text-sm text-gray-500">
+                                                Hello
+                                            </div> -->
+                                            <div class="mr-2 text-sm text-gray-500"
+                                                v-if="contact.fields.usd && contact.fields.cny_usd_1 && (contact.fields.cny_usd_2 || contact.fields.cny_usd_3 || contact.fields.cny_usd_4 || contact.fields.cny_usd_5 || contact.fields.cny_usd_6)">
+
+                                                <template v-if="contact.fields.cny_usd_6">
+                                                    {{ (contact.fields.cny_usd_6 - contact.fields.cny_usd_1).toFixed(2)
+                                                    }}
+                                                </template>
+                                                <template v-else-if="contact.fields.cny_usd_5">
+                                                    {{ (contact.fields.cny_usd_5 - contact.fields.cny_usd_1).toFixed(2)
+                                                    }}
+                                                </template>
+                                                <template v-else-if="contact.fields.cny_usd_4">
+                                                    {{ (contact.fields.cny_usd_4 - contact.fields.cny_usd_1).toFixed(2)
+                                                    }}
+                                                </template>
+                                                <!-- Continue the pattern for usd_rate_3, usd_rate_2 -->
+                                                <template v-else-if="contact.fields.cny_usd_3">
+                                                    {{ (contact.fields.cny_usd_3 - contact.fields.cny_usd_1).toFixed(2)
+                                                    }}
+                                                </template>
+                                                <template v-else-if="contact.fields.cny_usd_2">
+                                                    {{ (contact.fields.cny_usd_2 - contact.fields.cny_usd_1).toFixed(2)
+                                                    }}
+                                                </template>
+                                                <!-- If none of the rates are available, you can add an else block -->
+                                                <template v-else>
+                                                    <!-- Handle the case where none of the rates are set -->
+                                                </template>
+                                            </div>
+
                                         </li>
+
 
                                         <!-- usd_rate_1 -->
 
@@ -187,35 +258,9 @@
                                             </div>
 
                                             <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.upstream">
+                                                <template v-if="contact.fields.channel_1">
                                                     <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findUpById(contact.fields.upstream) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.upstream_2">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findUpById(contact.fields.upstream_2) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.upstream_3">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findUpById(contact.fields.upstream_3) }} </span>
+                                                        <span> {{ findChById(contact.fields.channel_1) }} </span>
                                                     </div>
                                                 </template>
                                                 <template v-else>
@@ -284,35 +329,9 @@
 
 
                                             <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.channel">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findChById(contact.fields.channel) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
                                                 <template v-if="contact.fields.channel_2">
                                                     <div class="d-flex flex-column text-sm">
                                                         <span> {{ findChById(contact.fields.channel_2) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.channel_3">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findChById(contact.fields.channel_3) }} </span>
                                                     </div>
                                                 </template>
                                                 <template v-else>
@@ -377,24 +396,13 @@
                                             </div>
 
                                             <div class="d-flex ml-5" style="width: 48px;">
-                                                <template>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
+                                                <template v-if="contact.fields.channel_3">
+                                                    <div class="d-flex flex-column text-sm">
+                                                        <span> {{ findChById(contact.fields.channel_3) }} </span>
                                                     </div>
                                                 </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template>
-                                                    <div class="d-flex flex-column">
+                                                <template v-else>
+                                                    <div class="d-flex flex-column text-sm">
                                                         <span class="fw-normal">&nbsp;</span>
                                                     </div>
                                                 </template>
@@ -403,12 +411,12 @@
                                             <!-- Hi -->
                                             <div class="d-flex mr-6" style="width: 40px;">
                                                 <template
-                                                    v-if="contact.fields.cny_usd_1 && contact.fields.cny_usd_2 && contact.fields.cny_usd_3">
+                                                    v-if="contact.fields.cny_usd_1 && contact.fields.cny_usd_2 && contact.fields.cny_usd_3 && contact.fields.cny_usd_4">
                                                     <div class="d-flex flex-column">
                                                         <!-- <span class="fw-normal">{{ contact.fields.cny_usd_1 }}</span> -->
-                                                        <span class="fw-normal text-sm text-gray-300"> {{
-                                                            (contact.fields.cny_usd_3 -
-                                                                contact.fields.cny_usd_1).toFixed(2)
+                                                        <span class="fw-normal text-sm"> {{
+                                                            (contact.fields.cny_usd_4 -
+                                                                contact.fields.cny_usd_3).toFixed(2)
                                                         }}</span>
                                                     </div>
                                                 </template>
@@ -417,583 +425,204 @@
                                                         <span class="fw-normal">&nbsp;</span>
                                                     </div>
                                                 </template>
+                                            </div>
+
+                                        </li>
+
+
+                                        <!-- usd_rate_4 -->
+
+                                        <li v-if="contact.fields.usd > 0"
+                                            class="list-group-item d-flex justify-content-between align-items-left">
+
+                                            <div class="d-flex" style="width: 30px;">
+                                                <template v-if="contact.fields.usd_rate_4">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal text-sm">{{ contact.fields.usd_rate_4
+                                                            }}</span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <div class="d-flex ml-6" style="width: 60px;">
+                                                <template v-if="contact.fields.cny_usd_4">
+                                                    <div class="d-flex flex-column">
+                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_usd_4 }}</span> -->
+                                                        <span class="fw-normal text-sm"> {{
+                                                            contact.fields.cny_usd_4.toFixed(2)
+                                                        }}</span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <div class="d-flex ml-5" style="width: 48px;">
+                                                <template v-if="contact.fields.channel_4">
+                                                    <div class="d-flex flex-column text-sm">
+                                                        <span> {{ findChById(contact.fields.channel_4) }} </span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column text-sm">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <!-- Hi -->
+                                            <div class="d-flex mr-6" style="width: 40px;">
+                                                <template
+                                                    v-if="contact.fields.cny_usd_1 && contact.fields.cny_usd_2 && contact.fields.cny_usd_3 && contact.fields.cny_usd_4 && contact.fields.cny_usd_5">
+                                                    <div class="d-flex flex-column">
+                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_usd_1 }}</span> -->
+                                                        <span class="fw-normal text-sm"> {{
+                                                            (contact.fields.cny_usd_5 -
+                                                                contact.fields.cny_usd_4).toFixed(2)
+                                                        }}</span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                        </li>
+
+
+                                        <!-- usd_rate_5 -->
+
+                                        <li v-if="contact.fields.usd > 0"
+                                            class="list-group-item d-flex justify-content-between align-items-left">
+
+                                            <div class="d-flex" style="width: 30px;">
+                                                <template v-if="contact.fields.usd_rate_5">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal text-sm">{{ contact.fields.usd_rate_5
+                                                            }}</span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <div class="d-flex ml-6" style="width: 60px;">
+                                                <template v-if="contact.fields.cny_usd_5">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal text-sm"> {{
+                                                            contact.fields.cny_usd_5.toFixed(2)
+                                                        }}</span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <div class="d-flex ml-5" style="width: 48px;">
+                                                <template v-if="contact.fields.channel_5">
+                                                    <div class="d-flex flex-column text-sm">
+                                                        <span> {{ findChById(contact.fields.channel_5) }} </span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column text-sm">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <!-- Hi -->
+                                            <div class="d-flex mr-6" style="width: 40px;">
+                                                <template
+                                                    v-if="contact.fields.cny_usd_1 && contact.fields.cny_usd_2 && contact.fields.cny_usd_3 && contact.fields.cny_usd_4 && contact.fields.cny_usd_5 && contact.fields.cny_usd_6">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal text-sm"> {{
+                                                            (contact.fields.cny_usd_6 -
+                                                                contact.fields.cny_usd_5).toFixed(2)
+                                                        }}</span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                        </li>
+
+
+                                        <!-- usd_rate_6 -->
+
+                                        <li v-if="contact.fields.usd > 0"
+                                            class="list-group-item d-flex justify-content-between align-items-left">
+
+                                            <div class="d-flex" style="width: 30px;">
+                                                <template v-if="contact.fields.usd_rate_6">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal text-sm">{{ contact.fields.usd_rate_6
+                                                            }}</span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <div class="d-flex ml-6" style="width: 60px;">
+                                                <template v-if="contact.fields.cny_usd_6">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal text-sm"> {{
+                                                            contact.fields.cny_usd_6.toFixed(2)
+                                                        }}</span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <div class="d-flex ml-5" style="width: 48px;">
+                                                <template v-if="contact.fields.channel_6">
+                                                    <div class="d-flex flex-column text-sm">
+                                                        <span> {{ findChById(contact.fields.channel_6) }} </span>
+                                                    </div>
+                                                </template>
+                                                <template v-else>
+                                                    <div class="d-flex flex-column text-sm">
+                                                        <span class="fw-normal">&nbsp;</span>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <!-- Hi -->
+                                            <div class="d-flex mr-6" style="width: 40px;">
+                                                &nbsp;
                                             </div>
 
                                         </li>
 
                                         <!-- usd usd usd usd usd -->
-
-
-
-
-                                        <!-- hkd hkd hkd hkd hkd -->
-
-                                        <li v-if="contact.fields.hkd > 0" class="list-group-item"><span class="mr-1"
-                                                :style="{ textDecoration: contact.fields.hkd > 0 ? null : 'line-through' }">HKD</span>
-                                            <span class="fw-normal">{{ contact.fields.hkd }}</span>
-                                        </li>
-
-                                        <!-- hkd_rate_1 -->
-
-                                        <li v-if="contact.fields.hkd > 0"
-                                            class="list-group-item d-flex justify-content-between align-items-left">
-                                            <div class="d-flex" style="width: 30px;">
-                                                <template v-if="contact.fields.hkd_rate_1">
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal text-sm">{{ contact.fields.hkd_rate_1
-                                                            }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-6" style="width: 60px;">
-                                                <template v-if="contact.fields.cny_hkd_1">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_hkd_1 }}</span> -->
-                                                        <span class="fw-normal text-sm"> {{
-                                                            contact.fields.cny_hkd_1.toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.upstream">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findUpById(contact.fields.upstream) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.upstream_2">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findUpById(contact.fields.upstream_2) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.upstream_3">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findUpById(contact.fields.upstream_3) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex mr-6" style="width: 40px;">
-                                                <template v-if="contact.fields.cny_hkd_1 && contact.fields.cny_hkd_2">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_hkd_1 }}</span> -->
-                                                        <span class="fw-normal text-sm"> {{
-                                                            (contact.fields.cny_hkd_2 -
-                                                                contact.fields.cny_hkd_1).toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                        </li>
-
-                                        <!-- hkd_rate_2 -->
-
-                                        <li v-if="contact.fields.hkd > 0"
-                                            class="list-group-item d-flex justify-content-between align-items-left">
-
-                                            <div class="d-flex" style="width: 30px;">
-                                                <template v-if="contact.fields.hkd_rate_2">
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal text-sm">{{ contact.fields.hkd_rate_2
-                                                            }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-6" style="width: 60px;">
-                                                <template v-if="contact.fields.cny_hkd_2">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_hkd_2 }}</span> -->
-                                                        <span class="fw-normal text-sm"> {{
-                                                            contact.fields.cny_hkd_2.toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-
-
-
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.channel">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findChById(contact.fields.channel) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.channel_2">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findChById(contact.fields.channel_2) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.channel_3">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findChById(contact.fields.channel_3) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex mr-6" style="width: 40px;">
-                                                <template v-if="contact.fields.cny_hkd_2 && contact.fields.cny_hkd_3">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_hkd_1 }}</span> -->
-                                                        <span class="fw-normal text-sm"> {{
-                                                            (contact.fields.cny_hkd_3 -
-                                                                contact.fields.cny_hkd_2).toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                        </li>
-
-                                        <!-- hkd_rate_3 -->
-
-                                        <li v-if="contact.fields.hkd > 0"
-                                            class="list-group-item d-flex justify-content-between align-items-left">
-
-                                            <div class="d-flex" style="width: 30px;">
-                                                <template v-if="contact.fields.hkd_rate_3">
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal text-sm">{{ contact.fields.hkd_rate_3
-                                                            }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-6" style="width: 60px;">
-                                                <template v-if="contact.fields.cny_hkd_3">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_hkd_3 }}</span> -->
-                                                        <span class="fw-normal text-sm"> {{
-                                                            contact.fields.cny_hkd_3.toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <!-- Hi -->
-                                            <div class="d-flex mr-6" style="width: 40px;">
-                                                <template
-                                                    v-if="contact.fields.cny_hkd_1 && contact.fields.cny_hkd_2 && contact.fields.cny_hkd_3">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_hkd_1 }}</span> -->
-                                                        <span class="fw-normal text-sm text-gray-300"> {{
-                                                            (contact.fields.cny_hkd_3 -
-                                                                contact.fields.cny_hkd_1).toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                        </li>
-
-                                        <!-- hkd hkd hkd hkd hkd -->
-
-
-
-
-
-
-                                        
-
-                                        <!-- oth oth oth oth oth -->
-
-                                        <li v-if="contact.fields.oth > 0" class="list-group-item"><span class="mr-1"
-                                                :style="{ textDecoration: contact.fields.oth > 0 ? null : 'line-through' }">{{ contact.fields.oth_name }}</span>
-                                            <span class="fw-normal">{{ contact.fields.oth }}</span>
-                                        </li>
-
-                                        <!-- oth_rate_1 -->
-
-                                        <li v-if="contact.fields.oth > 0"
-                                            class="list-group-item d-flex justify-content-between align-items-left">
-                                            <div class="d-flex" style="width: 30px;">
-                                                <template v-if="contact.fields.oth_rate_1">
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal text-sm">{{ contact.fields.oth_rate_1
-                                                            }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-6" style="width: 60px;">
-                                                <template v-if="contact.fields.cny_oth_1">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_oth_1 }}</span> -->
-                                                        <span class="fw-normal text-sm"> {{
-                                                            contact.fields.cny_oth_1.toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.upstream">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findUpById(contact.fields.upstream) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.upstream_2">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findUpById(contact.fields.upstream_2) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.upstream_3">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findUpById(contact.fields.upstream_3) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex mr-6" style="width: 40px;">
-                                                <template v-if="contact.fields.cny_oth_1 && contact.fields.cny_oth_2">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_oth_1 }}</span> -->
-                                                        <span class="fw-normal text-sm"> {{
-                                                            (contact.fields.cny_oth_2 -
-                                                                contact.fields.cny_oth_1).toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                        </li>
-
-                                        <!-- oth_rate_2 -->
-
-                                        <li v-if="contact.fields.oth > 0"
-                                            class="list-group-item d-flex justify-content-between align-items-left">
-
-                                            <div class="d-flex" style="width: 30px;">
-                                                <template v-if="contact.fields.oth_rate_2">
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal text-sm">{{ contact.fields.oth_rate_2
-                                                            }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-6" style="width: 60px;">
-                                                <template v-if="contact.fields.cny_oth_2">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_oth_2 }}</span> -->
-                                                        <span class="fw-normal text-sm"> {{
-                                                            contact.fields.cny_oth_2.toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-
-
-
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.channel">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findChById(contact.fields.channel) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.channel_2">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findChById(contact.fields.channel_2) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template v-if="contact.fields.channel_3">
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span> {{ findChById(contact.fields.channel_3) }} </span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column text-sm">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex mr-6" style="width: 40px;">
-                                                <template v-if="contact.fields.cny_oth_2 && contact.fields.cny_oth_3">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_oth_1 }}</span> -->
-                                                        <span class="fw-normal text-sm"> {{
-                                                            (contact.fields.cny_oth_3 -
-                                                                contact.fields.cny_oth_2).toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                        </li>
-
-                                        <!-- oth_rate_3 -->
-
-                                        <li v-if="contact.fields.oth > 0"
-                                            class="list-group-item d-flex justify-content-between align-items-left">
-
-                                            <div class="d-flex" style="width: 30px;">
-                                                <template v-if="contact.fields.oth_rate_3">
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal text-sm">{{ contact.fields.oth_rate_3
-                                                            }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-6" style="width: 60px;">
-                                                <template v-if="contact.fields.cny_oth_3">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_oth_3 }}</span> -->
-                                                        <span class="fw-normal text-sm"> {{
-                                                            contact.fields.cny_oth_3.toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <div class="d-flex ml-5" style="width: 48px;">
-                                                <template>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                            <!-- Hi -->
-                                            <div class="d-flex mr-6" style="width: 40px;">
-                                                <template
-                                                    v-if="contact.fields.cny_oth_1 && contact.fields.cny_oth_2 && contact.fields.cny_oth_3">
-                                                    <div class="d-flex flex-column">
-                                                        <!-- <span class="fw-normal">{{ contact.fields.cny_oth_1 }}</span> -->
-                                                        <span class="fw-normal text-sm text-gray-300"> {{
-                                                            (contact.fields.cny_oth_3 -
-                                                                contact.fields.cny_oth_1).toFixed(2)
-                                                        }}</span>
-                                                    </div>
-                                                </template>
-                                                <template v-else>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fw-normal">&nbsp;</span>
-                                                    </div>
-                                                </template>
-                                            </div>
-
-                                        </li>
-
-                                        <!-- oth oth oth oth oth -->
-
-
-
-
-
-
 
 
 
@@ -1041,12 +670,15 @@ import { ContactService } from '@/services/ContactService'
 import mySpinner from '@/components/Spinner.vue'
 import { supabase } from '@/clients/supabase'
 
+import DatePicker from 'vue3-datepicker'
+
 import { mapGetters } from 'vuex'
 import { mapActions } from 'vuex'
 
 export default {
 
     components: {
+        DatePicker,
         mySpinner
     },
 
@@ -1054,6 +686,8 @@ export default {
         return {
 
             searchName: null,
+
+            selectedDate: null, // initially today's date //new Date()
 
             loading: false,
             contacts: [],
@@ -1128,47 +762,10 @@ export default {
         isValidSearch() {
             return Boolean(this.searchName);
         },
-    },
 
-    created: async function () {
-
-        this.currentUserId = await this.currentUser();
-
-        if (this.currentUserId) {
-            try {
-                this.loading = true
-
-                if (this.$store.state.homeList_up.length > 0 && this.$store.state.homeList_ch.length > 0) {
-                    this.ups = this.$store.state.homeList_up
-                    this.chs = this.$store.state.homeList_ch
-                } else {
-                    let response_ups = await ContactService.getUpstreams()
-                    let response_chs = await ContactService.getChannels()
-
-                    this.ups = response_ups.data.records
-                    this.chs = response_chs.data.records
-                }
-
-                if (this.$store.state.homeList.length > 0) {
-                    this.contacts = this.$store.state.homeList
-                    await this.$store.dispatch('clearHomeAction')
-                } else {
-                    let response = await ContactService.getHK_main(this.currentUserId)
-                    this.contacts = response
-                    let theList
-                    theList = this.contacts
-                    await this.$store.dispatch('uploadRecordsAction', {
-                        theList
-                    })
-                }
-
-                this.loading = false
-            }
-            catch (error) {
-                this.errorMessage = error
-                this.loading = false
-            }
-        }
+        isValidDateSearch() {
+            return Boolean(this.selectedDate);
+        },
     },
 
     mounted() {
@@ -1252,15 +849,41 @@ export default {
             }
         },
 
-        async mySearch() {
+        async mySearch(searchType) {
             this.currentUserId = await this.currentUser();
+            let records;
 
             if (this.currentUserId) {
 
                 try {
-                    this.searchName = this.searchName.trim()
 
-                    const records = this.contacts.filter(contact => contact.fields.desc.toLowerCase().includes(this.searchName.toLowerCase()));
+                    // console.log('searchType',searchType)
+
+                    if (searchType === 'byName') {
+                        this.searchName = this.searchName.trim()
+
+                        records = this.contacts.filter(contact => contact.fields.desc.toLowerCase().includes(this.searchName.toLowerCase()));
+
+                    } else {
+
+                        console.log('searchType', searchType, this.selectedDate)
+
+                        // records = this.contacts.filter(contact => contact.fields.date.includes(this.selectedDate));
+                        // Assuming this.selectedDate is a JavaScript Date object
+                        const selectedDateString = this.selectedDate.toISOString().split('T')[0]; // Convert to "YYYY-MM-DD" format
+
+                        records = this.contacts.filter(contact => {
+                            // Convert the date string from contact to a Date object
+                            const contactDate = new Date(contact.fields.date);
+                            // Compare the year, month, and day
+                            return (
+                                contactDate.getFullYear() === this.selectedDate.getFullYear() &&
+                                contactDate.getMonth() === this.selectedDate.getMonth() &&
+                                contactDate.getDate() === this.selectedDate.getDate()
+                            );
+                        });
+
+                    }
 
                     let homeList
                     homeList = this.contacts
@@ -1294,12 +917,59 @@ export default {
 
         },
 
-    }
+    },
+
+    created: async function () {
+
+        this.currentUserId = await this.currentUser();
+
+        if (this.currentUserId) {
+            try {
+                this.loading = true
+
+                if (this.$store.state.homeList_up.length > 0 && this.$store.state.homeList_ch.length > 0) {
+                    this.ups = this.$store.state.homeList_up
+                    this.chs = this.$store.state.homeList_ch
+                } else {
+                    let response_ups = await ContactService.getUpstreams()
+                    let response_chs = await ContactService.getChannels()
+
+                    this.ups = response_ups.data.records
+                    this.chs = response_chs.data.records
+                }
+
+                if (this.$store.state.homeList.length > 0) {
+                    this.contacts = this.$store.state.homeList
+                    await this.$store.dispatch('clearHomeAction')
+                } else {
+                    let response = await ContactService.getHK_main(this.currentUserId)
+                    this.contacts = response
+                    let theList
+                    theList = this.contacts
+                    await this.$store.dispatch('uploadRecordsAction', {
+                        theList
+                    })
+                }
+
+                this.loading = false
+            }
+            catch (error) {
+                this.errorMessage = error
+                this.loading = false
+            }
+        }
+    },
+
 }
 
 </script>
 
 <style scoped>
+.input-placeholder-gray::placeholder {
+    color: rgb(156, 162, 174)
+        /* This will set the placeholder text color to gray */
+}
+
 .token {
     display: inline-block;
     overflow: hidden;
@@ -1316,5 +986,49 @@ export default {
     white-space: nowrap;
     max-width: 200px;
     /* adjust this value to change the maximum width */
+}
+
+.date-picker-container {
+    position: relative;
+}
+
+.datepicker {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.datepicker_no_border {
+    border-color: #e30707;
+    /* box-shadow: none !important; */
+}
+
+.date-picker-wrapper {
+    background-color: #e30700;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.no_border {
+    background-color: #ffffff;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.date-picker-input {
+    background-color: #fff;
+    border-color: #ced4da;
+    /* border: none !important; */
+    color: #495057;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    /* line-height: 1.5; */
+    line-height: 0;
+    height: calc(1.5em + 0.75rem + 2px);
+}
+
+.hide {
+    display: none;
+    border: none !important;
 }
 </style>
