@@ -173,7 +173,7 @@ export class ContactService {
 
   // by chatGPT
   static async airUpdateRecord(recordObj, contactId) {
-    
+
     // console.log('js oth_cny_1 --->>>', recordObj)
 
     return new Promise((resolve, reject) => {
@@ -224,12 +224,24 @@ export class ContactService {
           // delete recordObj.cny_oth_2;
           // delete recordObj.cny_oth_3;
 
-          recordObj.channel_1 = String(recordObj.channel_1)
-          recordObj.channel_2 = String(recordObj.channel_2)
-          recordObj.channel_3 = String(recordObj.channel_3)
-          recordObj.channel_4 = String(recordObj.channel_4)
-          recordObj.channel_5 = String(recordObj.channel_5)
-          recordObj.channel_6 = String(recordObj.channel_6)
+          if (recordObj.channel_1) {
+            recordObj.channel_1 = String(recordObj.channel_1)
+          }
+          if (recordObj.channel_2) {
+            recordObj.channel_2 = String(recordObj.channel_2)
+          }
+          if (recordObj.channel_3) {
+            recordObj.channel_3 = String(recordObj.channel_3)
+          }
+          if (recordObj.channel_4) {
+            recordObj.channel_4 = String(recordObj.channel_4)
+          }
+          if (recordObj.channel_5) {
+            recordObj.channel_5 = String(recordObj.channel_5)
+          }
+          if (recordObj.channel_6) {
+            recordObj.channel_6 = String(recordObj.channel_6)
+          }
 
           // recordObj.upstream = String(recordObj.upstream)
           // recordObj.upstream_2 = String(recordObj.upstream_2)
