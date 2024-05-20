@@ -745,7 +745,7 @@ export default {
             this.contact.usd_name = 'HKD'
           }
 
-          console.log('edit vue oth_cny_1 --->>>', this.contact)
+          // console.log('edit vue oth_cny_1 --->>>', this.contact)
 
           // let response = await ContactService.updateCondo(this.contact, this.contactId, this.currentUserId)
           let response = await ContactService.airUpdateRecord(

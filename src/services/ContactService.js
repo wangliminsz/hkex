@@ -22,7 +22,7 @@ export class ContactService {
 
   static getHK_main() {
 
-    console.log("hk_Main--->", this.serverAirURL_hk)
+    // console.log("hk_Main--->", this.serverAirURL_hk)
 
     let dataURL = `${this.serverAirURL_hk}/main`;
     let headers = {
