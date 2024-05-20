@@ -623,62 +623,62 @@ export default {
 
   computed: {
 
-      
-      ...mapGetters([
-        'isLoggedIn',
-        'whichUser'
-      ]),
 
-      isValidDesc() {
-        return Boolean(this.contact.desc);
-      },
+    ...mapGetters([
+      'isLoggedIn',
+      'whichUser'
+    ]),
 
-      isValidUSD() {
-        if (this.contact.usd == '') {
-          return false;
-        }
-        const usdNumber = Number(this.contact.usd);
-        return !isNaN(usdNumber);
-      },
+    isValidDesc() {
+      return Boolean(this.contact.desc);
+    },
 
-      isValidUSD_rate1() {
-        const usdRate1 = Number(this.contact.usd_rate_1);
-        return !isNaN(usdRate1);
-      },
-
-      isValidUSD_rate2() {
-        const usdRate2 = Number(this.contact.usd_rate_2);
-        return !isNaN(usdRate2);
-      },
-
-      isValidUSD_rate3() {
-        const usdRate3 = Number(this.contact.usd_rate_3);
-        return !isNaN(usdRate3);
-      },
-
-      isValidUSD_rate4() {
-        const usdRate4 = Number(this.contact.usd_rate_4);
-        return !isNaN(usdRate4);
-      },
-
-      isValidUSD_rate5() {
-        const usdRate5 = Number(this.contact.usd_rate_5);
-        return !isNaN(usdRate5);
-      },
-
-      isValidUSD_rate6() {
-        const usdRate6 = Number(this.contact.usd_rate_6);
-        return !isNaN(usdRate6);
-      },
-
-      isValidMemo() {
-        return true;
-      },
-
-      isFormValid() {
-        return (
-          (this.isValidUSD || this.isValidHKD || this.isValidOTH));
+    isValidUSD() {
+      if (this.contact.usd == '') {
+        return false;
       }
+      const usdNumber = Number(this.contact.usd);
+      return !isNaN(usdNumber);
+    },
+
+    isValidUSD_rate1() {
+      const usdRate1 = Number(this.contact.usd_rate_1);
+      return !isNaN(usdRate1);
+    },
+
+    isValidUSD_rate2() {
+      const usdRate2 = Number(this.contact.usd_rate_2);
+      return !isNaN(usdRate2);
+    },
+
+    isValidUSD_rate3() {
+      const usdRate3 = Number(this.contact.usd_rate_3);
+      return !isNaN(usdRate3);
+    },
+
+    isValidUSD_rate4() {
+      const usdRate4 = Number(this.contact.usd_rate_4);
+      return !isNaN(usdRate4);
+    },
+
+    isValidUSD_rate5() {
+      const usdRate5 = Number(this.contact.usd_rate_5);
+      return !isNaN(usdRate5);
+    },
+
+    isValidUSD_rate6() {
+      const usdRate6 = Number(this.contact.usd_rate_6);
+      return !isNaN(usdRate6);
+    },
+
+    isValidMemo() {
+      return true;
+    },
+
+    isFormValid() {
+      return (
+        (this.isValidUSD || this.isValidHKD || this.isValidOTH));
+    }
 
   },
 
@@ -719,12 +719,24 @@ export default {
           let dateWithCorrectTimeZone = new Date(Date.UTC(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate()));
           this.contact.date = dateWithCorrectTimeZone.toISOString().slice(0, 10);
 
-          this.contact.channel_1 = String(this.contact.channel_1);
-          this.contact.channel_2 = String(this.contact.channel_2);
-          this.contact.channel_3 = String(this.contact.channel_3);
-          this.contact.channel_4 = String(this.contact.channel_4);
-          this.contact.channel_5 = String(this.contact.channel_5);
-          this.contact.channel_6 = String(this.contact.channel_6);
+          if (this.contact.channel_1) {
+            this.contact.channel_1 = String(this.contact.channel_1);
+          }
+          if (this.contact.channel_2) {
+            this.contact.channel_2 = String(this.contact.channel_2);
+          }
+          if (this.contact.channel_3) {
+            this.contact.channel_3 = String(this.contact.channel_3);
+          }
+          if (this.contact.channel_4) {
+            this.contact.channel_4 = String(this.contact.channel_4);
+          }
+          if (this.contact.channel_5) {
+            this.contact.channel_5 = String(this.contact.channel_5);
+          }
+          if (this.contact.channel_6) {
+            this.contact.channel_6 = String(this.contact.channel_6);
+          }
 
           if (this.selectedCurrency === 'usd') {
             this.contact.usd_name = 'USD'
